@@ -3,7 +3,7 @@ import { Upload, Button, Icon, Form, Input, Row, InputNumber, Select } from 'ant
 import AdminLayout from '../../../components/admin-layout';
 import withRematch from '../../../rematch/withRematch';
 import { initStore } from '../../../rematch/store';
-
+import Router from 'next/router';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -16,9 +16,9 @@ class BookCreate extends React.Component<any, any> {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.props.bookPageReducer.createNewBookEffect({
+        await this.props.bookPageReducer.createNewBookEffect({
           title: values['title'],
           description: values['description'],
           author: values['author'],
@@ -27,7 +27,8 @@ class BookCreate extends React.Component<any, any> {
           quantity: values['quantity'],
           borrowPrice: values['borrow-price'],
           status: values['status'],
-        })
+        });
+        Router.push('/admin/book/managenment');
       }
     });
   }
