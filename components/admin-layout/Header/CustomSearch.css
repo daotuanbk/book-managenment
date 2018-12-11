@@ -1,0 +1,29 @@
+.custom-search {
+  display: inline-block;
+  height: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 12px;
+}
+
+.custom-search input {
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+  box-shadow: none !important;
+}
+
+.custom-search input:focus {
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+}
+
+.custom-search .hide {
+  width: 0;
+  background: transparent;
+}
+
+.custom-search .show {
+  width: 210px;
+  margin-left: 8px;
+}
