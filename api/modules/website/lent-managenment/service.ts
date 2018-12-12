@@ -18,12 +18,12 @@ const findLent = async (query: IFindLentQuery): Promise<IFindLentResult> => {
 
 const createLent = async (body: ICreateLentInput): Promise<IFindLentDetail> => {
   const validationRule = Joi.object().keys({
-    bookId: Joi.string().required,
-    userId: Joi.string().required,
-    dateBorrow: Joi.date().required,
-    dateOfAppointment: Joi.date().required,
-    borrowPrice: Joi.number().required,
-    status: Joi.string().required,
+    bookId: Joi.string().required(),
+    userId: Joi.string().required(),
+    dateBorrow: Joi.date().required(),
+    dateOfAppointment: Joi.date().required(),
+    borrowPrice: Joi.number().required(),
+    status: Joi.string().required(),
   });
   const { error } = Joi.validate(body, validationRule, {
     allowUnknown: true,

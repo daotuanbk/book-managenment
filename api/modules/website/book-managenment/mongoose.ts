@@ -7,15 +7,10 @@ const BookSchema = new mongoose.Schema(addAuditSchema(addActiveSchema({
   description: String,
   author: String,
   language: String,
-  cover: String,
   categories: [String],
-  chapters: [{
-    name: String,
-    index: Number,
-    price: Number,
-    currency: String,
-    quantity: Number,
-  }],
+  coverUrl: String,
+  quantity: Number,
+  borrowPrice: Number,
   status: String,
 })));
 

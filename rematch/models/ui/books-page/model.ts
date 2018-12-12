@@ -167,7 +167,6 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
         this.starting();
         const bookService = getBooksService();
         await bookService.update(payload);
-
         this.updateBookSuccess();
         message.success('Update Book Successful', 3);
       } catch (error) {

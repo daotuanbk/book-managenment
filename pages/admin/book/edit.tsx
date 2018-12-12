@@ -4,7 +4,7 @@ import AdminLayout from '../../../components/admin-layout';
 import withRematch from '../../../rematch/withRematch';
 import { initStore } from '../../../rematch/store';
 import Router from 'next/router';
-
+import config from '../../../configs/default.config'
 const Option = Select.Option;
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -22,8 +22,19 @@ class BookEdit extends React.Component<any, any> {
       base64: '',
     };
   }
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
+    let formData = new FormData();
+    formData.set('image', this.props.bookPageState.fileList[0]);
+    await fetch(
+    `${config.nextjs.apiUrl}/images/upload/book/${this.props.bookPageState.data[0]._id}`, {
+      method: 'POST',
+      headers: {
+        'authorization': this.props.profileState.token,
+      },
+      body: formData,
+    }
+  );
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         await this.props.bookPageReducer.updateBookEffect({ 
@@ -36,6 +47,9 @@ class BookEdit extends React.Component<any, any> {
           quantity: values['quantity'],
           borrowPrice: values['borrow-price'],
           status: values['status'],
+          coverUrl: this.props.bookPageState.fileList.length === 0 ? 
+          this.props.bookPageState.data[0].coverUrl :
+           `/static/images/book/image-${this.props.bookPageState.data[0]._id}.${this.props.bookPageState.fileList[0].type.slice(6, 10)}`,
         });
         Router.push('/admin/book/managenment');
       }
@@ -71,7 +85,7 @@ class BookEdit extends React.Component<any, any> {
                 Cover Image
               </p>
               <Row>
-                {this.state.base64 ? 
+                {this.props.bookPageState.fileList.length !== 0 ? 
                 <img src={this.state.base64} width={'30%'} style={{ marginBottom: '20px' }} /> :
                 <img src={this.props.bookPageState.data[0].coverUrl} width={'30%'} style={{ marginBottom: '20px' }} />
               }
