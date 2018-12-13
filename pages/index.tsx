@@ -30,7 +30,7 @@ class LandingPage extends React.Component<any, any> {
             style={{ width: '100%' }}
             cover={<img alt="bookCover" src={value.coverUrl} />}
             actions={[<div>
-              <Link href={`/book/${value._id}`}><Button icon='folder-add' type='danger'>Thuê ngay</Button></Link>
+              <a href={`/book/${value._id}`}><Button icon='folder-add' type='danger'>Thuê ngay</Button></a>
               </div>]}
           >
             <Meta

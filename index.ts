@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser'; 
 import * as cookieParser from 'cookie-parser';
-import * as session from 'express-session';
+// import * as session from 'express-session';
 import * as cors from 'cors';
 import { bootstrapNextjs } from './nextjs/bootstrapNextjs';
 import apiRouter from './api';
@@ -23,13 +23,13 @@ const bootstrap = async () => {
   server.use(bodyParser.urlencoded({extended: true, limit: '20mb'}));
   server.use(bodyParser.json());
   server.use(cookieParser());
-  server.use(session({
-    secret: 'techkids',
-    resave: false,
-    saveUninitialized: true,
-    limit: '20mb'
-  })
-);
+  // server.use(session({
+  //   secret: 'techkids',
+  //   resave: false,
+  //   saveUninitialized: true,
+  //   limit: '20mb'
+  // })
+// );
   await bootstrapNextjs(server);
   server.use('/api', apiRouter);
 

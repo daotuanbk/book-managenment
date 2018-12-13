@@ -35,6 +35,24 @@ const setupPublicRoutes = (server: express.Express, app: next.Server) => {
     });
   });
 
+  server.get('/book/:id', Authorize(), async (req, res) => {
+    const actualPage = '/book-detail';
+    const bookData: any = await booksManagenmentService.findBookById(req.params.id);
+    const queryParams = {...req.query, id: req.params.id, bookData };
+    app.render(req, res, actualPage, queryParams, Object.assign({
+      id: req.params.id,
+      slug: req.params.slug,
+      name: req.params.name,
+    }));
+  });
+
+  server.get('/book', Authorize(), (req, res) => {
+    if (req.query.id) {
+      res.redirect(`/book/${req.query.id}`);
+    }
+    res.redirect('/book');
+  });
+
   server.get('/admin', async (_req, res) => {
     res.redirect('/admin/users');
   });
@@ -81,40 +99,25 @@ const setupPublicRoutes = (server: express.Express, app: next.Server) => {
 
     server.get('/admin/book/edit/:id', Authorize(), async (req, res) => {
       const actualPage = '/admin/book/edit';
-      // const bookData = await booksManagenmentService.findBookById(req.params.id);
-      const queryParams = { id: req.params.id };
-      app.render(req, res, actualPage, queryParams, Object.assign({
+      const bookData: any = await booksManagenmentService.findBookById(req.params.id);
+      // const queryParams = { id: req.params.id, bookData };
+      app.render(req, res, actualPage, {
+        ...req.query,
+        id: req.params.id,
+        bookData,
+      }, Object.assign({
         id: req.params.id,
         slug: req.params.slug,
         name: req.params.name,
-      }, req.query));
+      }));
     });
 
-    server.get('/admin/book/edit', (req, res) => {
+    server.get('/admin/book/edit', Authorize(), (req, res) => {
       if (req.query.id) {
         res.redirect(`/admin/book/edit/${req.query.id}`);
       }
       res.redirect('/admin/book/edit');
     });
-
-    server.get('/book/:id', async (req, res) => {
-      const actualPage = '/book-detail';
-      // const bookData = await booksManagenmentService.findBookById(req.params.id);
-      const queryParams = { id: req.params.id };
-      app.render(req, res, actualPage, queryParams, Object.assign({
-        id: req.params.id,
-        slug: req.params.slug,
-        name: req.params.name,
-      }, req.query));
-    });
-
-    server.get('/book-detail', (req, res) => {
-      if (req.query.id) {
-        res.redirect(`/book/${req.query.id}`);
-      }
-      res.redirect('/book');
-    });
-
   });
 };
 

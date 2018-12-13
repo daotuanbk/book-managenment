@@ -10,11 +10,11 @@ const FormItem = Form.Item;
 const { TextArea } = Input;
 class BookEdit extends React.Component<any, any> {
   static async getInitialProps(props: any) {
-    // if (!props.req) {
+    if (!props.req) {
       await props.store.dispatch.booksPageModel.getBookByIdEffect({_id: props.query.id});
-    // }else {
-    //   props.store.dispatch.booksPageModel.getBookByIdSuccess({ data: props.query.bookData });
-    // }
+    }else {
+      props.store.dispatch.booksPageModel.getBookByIdSuccess({ data: props.query.bookData });
+    }
   }
   constructor(props: any) {
     super(props);
