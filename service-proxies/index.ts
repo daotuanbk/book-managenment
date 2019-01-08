@@ -5,6 +5,7 @@ import RolesServiceProxy from "./roles-service-proxy";
 import AuthServiceProxy from "./auth-service-proxy";
 import UploadImagesServiceProxy from "./upload-images-service-proxy";
 import BooksServiceProxy from "./books-service-proxy";
+import LentServiceProxy from "./lent-service-proxy";
 
 
 const getUsersService = (token = '') => {
@@ -27,10 +28,15 @@ const getBooksService = (token = '') => {
   return BooksServiceProxy(config.nextjs.apiUrl, token);
 }
 
+const getLentService = (token = '') => {
+  return LentServiceProxy(config.nextjs.apiUrl, token);
+}
+
 export {
   getUsersService,
   getRolesService,
   getAuthService,
   getUploadImagesService,
   getBooksService,
+  getLentService,
 };

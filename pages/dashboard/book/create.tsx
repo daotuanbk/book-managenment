@@ -28,7 +28,7 @@ class BookCreate extends React.Component<any, any> {
           borrowPrice: values['borrow-price'],
           status: values['status'],
         });
-        Router.push('/admin/book/managenment');
+        Router.push('/dashboard/book/managenment');
       }
     });
   }
@@ -127,7 +127,7 @@ class BookCreate extends React.Component<any, any> {
                   <Select defaultValue="active" style={{ width: 120 }}>
                   <Option value="active">Active</Option>
                   <Option value="deactive">Deactive</Option>
-                  <Option value="disabled">Disabled</Option>
+                  <Option value="outstock">Out of stock</Option>
                 </Select>
                 )}
               </FormItem>

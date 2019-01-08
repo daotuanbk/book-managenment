@@ -11,6 +11,9 @@ export interface IBookPageState {
   asc: boolean;
   total: number;
   fileList: any[];
+  modalVisible: boolean;
+  indexPageSize: number;
+  dateOfAppointment: Date;
 }
 
 export interface IErrorHappenPayload {
@@ -67,4 +70,27 @@ export interface IGetBookByIdEffect {
 
 export interface IGetBookByIdSuccess {
   data: IFindBookDetail;
+}
+
+export interface IOnChangeSearchValue {
+  searchValue: string;
+}
+
+export interface IPaginationChange {
+  current: number;
+  pageSize: number;
+}
+
+export interface IOnConfirmModal {
+  bookId: string;
+  userId: string;
+  dateBorrow: Date;
+  dateOfAppointment: Date;
+  borrowPrice: number;
+  status: string;
+  bookPrice: number;
+}
+
+export interface IHandleDatePickerChange {
+  date: Date;
 }

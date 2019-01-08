@@ -15,6 +15,7 @@ lentManagenmentRouter.get('/find/:id', async (req, res) => {
 
 lentManagenmentRouter.get('/find', async (req, res) => {
   try {
+    console.log('ok');
     const result = await lentManagenmentService.findLent(validatePagination(req.query));
     res.status(200).send(result);
   } catch (err) {

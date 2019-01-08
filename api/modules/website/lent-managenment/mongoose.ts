@@ -3,8 +3,14 @@ import { addAuditSchema, addActiveSchema } from '../../../core/helpers';
 import { ILent } from './interface';
 
 const LentSchema = new mongoose.Schema(addAuditSchema(addActiveSchema({
-  bookId: String,
-  userId: String,
+  bookId: {
+    type: String,
+    ref: 'Book'
+  },
+  userId: {
+    type: String,
+    ref: 'User'
+  },
   dateBorrow: Date,
   dateOfAppointment: Date,
   borrowPrice: Number,

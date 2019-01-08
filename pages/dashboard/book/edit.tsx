@@ -51,7 +51,7 @@ class BookEdit extends React.Component<any, any> {
           this.props.bookPageState.data[0].coverUrl :
            `/static/images/book/image-${this.props.bookPageState.data[0]._id}.${this.props.bookPageState.fileList[0].type.slice(6, 10)}`,
         });
-        Router.push('/admin/book/managenment');
+        Router.push('/dashboard/book/managenment');
       }
     });
   }
@@ -159,7 +159,7 @@ class BookEdit extends React.Component<any, any> {
                   <Select style={{ width: 120 }}>
                   <Option value="active">Active</Option>
                   <Option value="deactive">Deactive</Option>
-                  <Option value="disabled">Disabled</Option>
+                  <Option value="outstock">Out of stock</Option>
                 </Select>
                 )}
               </FormItem>

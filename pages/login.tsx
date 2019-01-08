@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Row, Col, Form, Input, Icon, Checkbox, Button } from 'antd';
-import '../../static/css/admin/login.css';
-import withRematch from '../../rematch/withRematch';
-import { initStore } from '../../rematch/store';
+import '../static/css/admin/login.css';
+import withRematch from '../rematch/withRematch';
+import { initStore } from '../rematch/store';
 
 class LoginPage extends React.Component<any, any> {
   handleSubmit = (e) => {

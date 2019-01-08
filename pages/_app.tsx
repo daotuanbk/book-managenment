@@ -1,7 +1,7 @@
 import App, {Container} from 'next/app'
 import React from 'react'
 
-export default class UpBeatApp extends App {
+export default class ProjectI extends App {
   static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
 

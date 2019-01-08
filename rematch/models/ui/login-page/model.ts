@@ -59,7 +59,7 @@ const loginPageModel: ModelConfig<ILoginPageState> = createModel({
         if (callbackUrl) {
           Router.push(callbackUrl);
         } else {
-          Router.push('/admin/users');
+          Router.push('/');
         }
       } catch (error) {
         console.log(error);

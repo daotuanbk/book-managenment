@@ -69,9 +69,23 @@ const findExistedBook = async (body: ICreateBookInput): Promise<IFindBookDetail>
 
 const editBook = async (body: IUpdateBookDetail): Promise<IFindBookDetail> => {
   try {
+    if (body.quantity === 0) {
+      await BooksModel
+      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
+      return await BooksModel
+      .findByIdAndUpdate({ _id: body._id}, { $set: {status: 'outstock'}})
+      .exec() as any
+    } else if (body.status === 'outstock') {
+      await BooksModel
+      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
+      return await BooksModel
+      .findByIdAndUpdate({ _id: body._id}, { $set: {quantity: 0}})
+      .exec() as any
+    } else {
     return await BooksModel
       .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
       .exec() as any;
+    }
   } catch (error) {
     throw new Error(error.message || 'Internal server error.');
   }

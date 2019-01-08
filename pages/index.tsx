@@ -3,7 +3,10 @@ import Container from '../components/book-managenment/Container';
 import withRematch from '../rematch/withRematch';
 import { initStore } from '../rematch/store';
 import { Row, Col, Card, Button } from 'antd';
-import Link from 'next/link';
+import Header from '../components/admin-layout/Header/Header';
+import * as jsCookie from 'js-cookie';
+import config from '../configs';
+import Router from 'next/router';
 const { Meta } = Card;
 
 class LandingPage extends React.Component<any, any> {
@@ -13,7 +16,7 @@ class LandingPage extends React.Component<any, any> {
       await props.store.dispatch.booksPageModel.fetchDataEffect({
         search: bookPageState.searchInput,
         pageNumber: bookPageState.pageNumber,
-        pageSize: bookPageState.pageSize,
+        pageSize: bookPageState.indexPageSize,
         sortBy: bookPageState.sortBy,
         asc: bookPageState.asc,
       });
@@ -21,14 +24,24 @@ class LandingPage extends React.Component<any, any> {
       props.store.dispatch.booksPageModel.fetchDataSuccess({ result: props.query.booksData });
     }
   }
+  logOut = () => {
+    this.props.profileReducer.logOut();
+
+    // Clear Cookie
+    jsCookie.remove('token', {domain: config.nextjs.cookieDomain});
+
+    // Redirect
+    Router.push('/login');
+  }
   render() {
     const renderBooks = this.props.bookPageState.data.map((value, index) => {
       return (
+        <div>
         <Col span={6} key={index} style={{padding: '10px'}}>
           <Card
             hoverable
             style={{ width: '100%' }}
-            cover={<img alt="bookCover" src={value.coverUrl} />}
+            cover={<div style={{background: `url(${value.coverUrl})`, backgroundSize: 'cover', width: '100%', height: '300px', backgroundPosition: 'center'}}></div>}
             actions={[<div>
               <a href={`/book/${value._id}`}><Button icon='folder-add' type='danger'>Thuê ngay</Button></a>
               </div>]}
@@ -43,10 +56,12 @@ class LandingPage extends React.Component<any, any> {
             />
           </Card>
         </Col>
+        </div>
       );
     })
     return (
       <div>
+        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} />
         <Container>
           <Row>
             {renderBooks}

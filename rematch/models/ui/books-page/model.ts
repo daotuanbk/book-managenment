@@ -1,8 +1,9 @@
 import { createModel, ModelConfig } from "@rematch/core";
-import { IBookPageState, IErrorHappenPayload, IFetchDataPayload, IFetchDataSuccessPayload, IOnChangeFileList, IUpdateBookEffect, ISearchChangeEffect, ICreateNewBookEffect, IGetBookByIdEffect, IGetBookByIdSuccess } from "./interface";
-import { getBooksService } from "../../../../service-proxies";
+import { IBookPageState, IErrorHappenPayload, IFetchDataPayload, IFetchDataSuccessPayload, IOnChangeFileList, IUpdateBookEffect, ISearchChangeEffect, ICreateNewBookEffect, IGetBookByIdEffect, IGetBookByIdSuccess, IOnChangeSearchValue, IPaginationChange, IOnConfirmModal, IHandleDatePickerChange } from "./interface";
+import { getBooksService, getLentService } from "../../../../service-proxies";
 import config from '../../../../configs/default.config';
 import { message } from 'antd';
+import moment from "moment";
 const booksPageModel: ModelConfig<IBookPageState> = createModel({
   state: {
     data: [],
@@ -15,6 +16,9 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     asc: true,
     total: 0,
     fileList: [],
+    modalVisible: false,
+    indexPageSize: 12,
+    dateOfAppointment: moment(new Date(), 'DD/MM/YYYY') as any,
   },
   reducers: {
     starting: (state: IBookPageState): IBookPageState => {
@@ -31,6 +35,15 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
         ...state,
         isBusy: false,
         errorMessage: payload.errorMessage
+      };
+    },
+    onChangeSearchValue: (
+      state: IBookPageState,
+      payload: IOnChangeSearchValue
+    ): IBookPageState => {
+      return {
+        ...state,
+        searchInput: payload.searchValue,
       };
     },
     fetchDataSuccess: (
@@ -83,7 +96,62 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
         errorMessage: '',
         data: [payload.data],
       }
-    }
+    },
+    onOpenModal: (
+      state: IBookPageState,
+      // payload: IGetBookByIdSuccess
+    ): IBookPageState => {
+      return {
+        ...state,
+        modalVisible: true,
+      }
+    },
+    onCancelModal: (
+      state: IBookPageState,
+      // payload: IGetBookByIdSuccess
+    ): IBookPageState => {
+      return {
+        ...state,
+        modalVisible: false,
+      }
+    },
+    onConfirmModalSuccess: (
+      state: IBookPageState,
+      // payload: IGetBookByIdSuccess
+    ): IBookPageState => {
+      message.success('Mượn sách thành công');
+      return {
+        ...state,
+        modalVisible: false,
+        data: state.data.map ((value, index) => {
+          if (index === 0) {
+            return {
+              ...value,
+              quantity: value.quantity - 1
+            }
+          }
+        })
+      }
+    },
+    handlePaginationChange: (
+      state: IBookPageState,
+      payload: IPaginationChange
+    ): IBookPageState => {
+      return {
+        ...state,
+        pageNumber: payload.current,
+        pageSize: payload.pageSize
+      };
+    },
+    handleDatePickerChange: (
+      state: IBookPageState,
+      payload: IHandleDatePickerChange
+    ): IBookPageState => {
+      return {
+        ...state,
+        dateOfAppointment: payload.date,
+      };
+    },
   },
   effects: {
     async fetchDataEffect(
@@ -181,8 +249,28 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
         this.starting();
         const bookService = getBooksService();
         const data = await bookService.findBookById(payload._id);
-        console.log('data', data)
         this.getBookByIdSuccess({data: data})
+      } catch (error) {
+        message.error(error.message, 3);
+      }
+    },
+    async onConfirmModal(
+      payload: IOnConfirmModal,
+      _rootState: any
+    ): Promise<void> {
+      try {
+        this.starting();
+        const borrowPrice = payload.borrowPrice * payload.dateOfAppointment.diff(payload.dateBorrow, 'days');
+        const lentService = getLentService();
+        const data = await lentService.create({
+          bookId: String(payload.bookId),
+          userId: String(payload.userId),
+          dateBorrow: payload.dateBorrow,
+          dateOfAppointment: payload.dateOfAppointment,
+          borrowPrice: borrowPrice,
+          status: payload.status
+        })
+        this.onConfirmModalSuccess({data: data})
       } catch (error) {
         message.error(error.message, 3);
       }

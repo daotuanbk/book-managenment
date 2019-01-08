@@ -19,6 +19,16 @@ class BookManagenment extends React.Component<any, any> {
     props.store.dispatch.booksPageModel.fetchDataSuccess({ result: props.query.booksData });
   }
 }
+  handleSearchChange = (searchValue: string) => {
+    this.props.bookPageReducer.onChangeSearchValue({searchValue: searchValue});
+    this.props.bookPageReducer.fetchDataEffect({
+      search: searchValue,
+      pageNumber: this.props.bookPageState.pageNumber,
+      pageSize: this.props.bookPageState.pageSize,
+      sortBy: this.props.bookPageState.sortBy,
+      asc: this.props.bookPageState.asc,
+    })
+  }
   render() {
     return (
       <div>
@@ -36,7 +46,7 @@ class BookManagenment extends React.Component<any, any> {
                 data={this.props.bookPageState.data}
                 // includeOrExcludeInactivePost={this.includeOrExcludeInactivePost}
                 // deactivateOrActivatePost={this.deactivateOrActivatePost}
-                // handleSearchChange={this.handleSearchChange}
+                handleSearchChange={this.handleSearchChange}
                 // handleEditFormSubmit={this.handleEditFormSubmit}
                 {...this.props}
               />

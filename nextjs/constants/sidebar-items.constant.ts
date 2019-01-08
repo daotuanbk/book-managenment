@@ -6,14 +6,14 @@ const sidebarItems = [
     icon: 'user',
     items: [
       {
-        key: '/admin/users',
-        path: '/admin/users',
+        key: '/dashboard/users',
+        path: '/dashboard/users',
         title: 'Users',
         permissions: [],
       },
       {
-        key: '/admin/roles',
-        path: '/admin/roles',
+        key: '/dashboard/roles',
+        path: '/dashboard/roles',
         title: 'Roles',
         permissions: [],
       },
@@ -26,9 +26,15 @@ const sidebarItems = [
     icon: 'book',
     items: [
       {
-        key: '/admin/book/managenment',
-        path: '/admin/book/managenment',
+        key: '/dashboard/book/managenment',
+        path: '/dashboard/book/managenment',
         title: 'Books Managenment',
+        permissions: [],
+      },
+      {
+        key: '/dashboard/lent/managenment',
+        path: '/dashboard/lent/managenment',
+        title: 'Lents Managenment',
         permissions: [],
       },
     ],

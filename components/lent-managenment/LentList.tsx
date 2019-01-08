@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Row, Col, Table, Input, Checkbox, Button, Tooltip, Tag } from 'antd';
 import Link from 'next/link';
-class BookList extends React.Component<any, any> {
+import moment from 'moment';
+class LentList extends React.Component<any, any> {
   render() {
     const columns = [{
       title: 'Action',
@@ -28,12 +29,32 @@ class BookList extends React.Component<any, any> {
       ),
     }, {
       title: 'Title',
-      dataIndex: 'title',
+      dataIndex: 'bookId.title',
       key: 'title',
     }, {
-      title: 'Author',
-      dataIndex: 'author',
-      key: 'author',
+      title: 'User Borrow',
+      dataIndex: 'userId.fullName',
+      key: 'user',
+    }, 
+    {
+      title: 'Date Borrow',
+      dataIndex: 'dateBorrow',
+      key: 'dateBorrow',
+      render: (item: any) => {
+        return (
+          <div><span>{moment(item, 'DD/MM/YYYY') as any}</span></div>
+        )
+      }
+    }, 
+    {
+      title: 'Date Of Appointment',
+      dataIndex: 'dateOfAppointment',
+      key: 'dateOfAppointment',
+      render: (item: any) => {
+        return (
+          <div><span>{moment(item, 'DD/MM/YYYY') as any}</span></div>
+        )
+      }
     }, {
       title: 'Status',
       dataIndex: 'status',
@@ -46,10 +67,6 @@ class BookList extends React.Component<any, any> {
         } else if (item === 'deactive') {
           return (
             <Tag color='red'>Deactive</Tag>
-          )
-        } else if (item === 'outstock') {
-          return (
-            <Tag color='red'>Out-of-stock</Tag>
           )
         }
       }
@@ -83,33 +100,33 @@ class BookList extends React.Component<any, any> {
         </Button>
           </Link>
         </Row>
-        <Table columns={columns} dataSource={this.props.bookPageState.data} pagination={{
-          total: this.props.bookPageState.total,
-          current: this.props.bookPageState.pageNumber,
+        <Table columns={columns} dataSource={this.props.lentPageState.data} pagination={{
+          total: this.props.lentPageState.total,
+          current: this.props.lentPageState.pageNumber,
           showSizeChanger: true,
-          pageSize: this.props.bookPageState.pageSize,
+          pageSize: this.props.lentPageState.pageSize,
           pageSizeOptions: [10, 20, 50].map(item =>
             String(item),
           ),
           onChange: (page, pageSize) => {
-            this.props.bookPageReducer.fetchDataEffect({
-              search: this.props.bookPageState.searchInput,
+            this.props.lentPageReducer.fetchDataEffect({
+              search: this.props.lentPageState.searchInput,
               pageNumber: page,
               pageSize: pageSize,
-              sortBy: this.props.bookPageState.sortBy,
-              asc: this.props.bookPageState.asc
+              sortBy: this.props.lentPageState.sortBy,
+              asc: this.props.lentPageState.asc
             });
-            this.props.bookPageReducer.handlePaginationChange({ current: page, pageSize: pageSize });
+            this.props.lentPageReducer.handlePaginationChange({ current: page, pageSize: pageSize });
           },
           onShowSizeChange: (current, size) => {
-            this.props.bookPageReducer.fetchDataEffect({
-              search: this.props.bookPageState.search,
+            this.props.lentPageReducer.fetchDataEffect({
+              search: this.props.lentPageState.search,
               pageNumber: current,
               pageSize: size,
-              sortBy: this.props.bookPageState.sortBy,
-              asc: this.props.bookPageState.asc
+              sortBy: this.props.lentPageState.sortBy,
+              asc: this.props.lentPageState.asc
             });
-            this.props.bookPageReducer.handlePaginationChange({current: current, pageSize: size});
+            this.props.lentPageReducer.handlePaginationChange({current: current, pageSize: size});
           }
         }} />
       </div>
@@ -117,4 +134,4 @@ class BookList extends React.Component<any, any> {
   }
 }
 
-export default BookList;
+export default LentList;

@@ -8,4 +8,6 @@ export const UserPermissions = {
   ROLES_CREATE: 'Roles.Create',
   ROLES_EDIT: 'Roles.Edit',
   ROLES_DELETE: 'Roles.Delete',
+
+  BOOK_MANAGENMENT: 'Book.Managenment'
 };

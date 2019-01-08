@@ -31,7 +31,7 @@ const UsersSchema = new mongoose.Schema(addAuditSchema(addActiveSchema({
   },
 
   failLoginTryCount: Number,
-  emailConfirmed: Boolean,
+  emailConfirmed: { type: String, default: true},
   lastLoginTime: Date,
 })));
 

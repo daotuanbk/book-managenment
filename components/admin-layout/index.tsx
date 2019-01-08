@@ -22,7 +22,7 @@ class AdminLayout extends React.Component<MainPageProps, any> {
     jsCookie.remove('token', {domain: config.nextjs.cookieDomain});
 
     // Redirect
-    Router.push('/admin/login');
+    Router.push('/login');
   }
 
   render() {
@@ -41,7 +41,7 @@ class AdminLayout extends React.Component<MainPageProps, any> {
 
           <Layout>
             <Layout.Header style={{ padding: 0 }}>
-              <Header userEmail={this.props.profileState.email} logOut={this.logOut} />
+        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} />
             </Layout.Header>
 
             <Layout.Content>

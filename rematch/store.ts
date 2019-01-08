@@ -4,6 +4,7 @@ import usersPageModel from './models/ui/users-page/model';
 import loginPageModel from './models/ui/login-page/model';
 import booksPageModel from './models/ui/books-page/model';
 import profileModel from './models/profile/model';
+import lentPageModel from './models/ui/lent-page/model';
 
 export const initStore = (initialState: any = {}) => {
   return init({
@@ -12,7 +13,8 @@ export const initStore = (initialState: any = {}) => {
       loginPageModel,
       rolesPageModel,
       usersPageModel,
-      booksPageModel
+      booksPageModel,
+      lentPageModel,
     },
     redux: {
       initialState

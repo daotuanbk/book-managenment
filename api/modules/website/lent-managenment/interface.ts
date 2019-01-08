@@ -2,8 +2,8 @@ import { Document } from 'mongoose';
 import { PageableResult } from '../../../../api/core/interfaces';
 
 export interface ILent extends Document {
-  bookId: string,
-  userId: string,
+  bookId: any,
+  userId: any,
   dateBorrow: Date,
   dateOfAppointment: Date,
   borrowPrice: number,
@@ -12,8 +12,8 @@ export interface ILent extends Document {
 
 
 export interface IFindLentDetail {
-  bookId: string,
-  userId: string,
+  bookId: any,
+  userId: any,
   dateBorrow: Date,
   dateOfAppointment: Date,
   borrowPrice: number,
@@ -21,8 +21,8 @@ export interface IFindLentDetail {
 }
 
 export interface ICreateLentInput {
-  bookId: string,
-  userId: string,
+  bookId: any,
+  userId: any,
   dateBorrow: Date,
   dateOfAppointment: Date,
   borrowPrice: number,
@@ -33,8 +33,8 @@ export interface IFindLentResult extends PageableResult<IFindLentDetail> {}
 
 export interface IUpdateLentDetail {
   _id: string;
-  bookId?: string,
-  userId?: string,
+  bookId?: any,
+  userId?: any,
   dateBorrow?: Date,
   dateOfAppointment?: Date,
   borrowPrice?: number,

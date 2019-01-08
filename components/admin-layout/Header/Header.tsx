@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { Menu, Icon, Dropdown, Avatar } from 'antd';
+import { Menu, Icon, Dropdown, Avatar, Button } from 'antd';
 import CustomSearch from './CustomSearch';
 import './Header.css';
 import Link from 'next/link';
 
-interface HeaderProps {
-  userEmail: string;
-  logOut: () => void;
-}
-
-const Header = (props: HeaderProps) => {
+const Header = (props: any) => {
   const menu: JSX.Element = (
     <Menu className="user-menu" selectedKeys={[]}>
       <Menu.Item>
@@ -44,13 +39,14 @@ const Header = (props: HeaderProps) => {
     <div className="header">
       <div className="header-right">
         <CustomSearch {...props} />
-
-        <Dropdown overlay={menu}>
-          <span className="avatar">
-            <Avatar className="avatar-image" style={{ backgroundColor: '#87d068' }} icon="user" />
-            <span className="avatar-name">{props.userEmail}</span>
-          </span>
-        </Dropdown>
+        {props._id ? 
+               <Dropdown overlay={menu}>
+               <span className="avatar">
+                 <Avatar className="avatar-image" style={{ backgroundColor: '#87d068' }} icon="user" />
+                 <span className="avatar-name">{props.userEmail}</span>
+               </span>
+             </Dropdown> : 
+            <Link href='/login'><Button type='primary'>Đăng nhập</Button></Link> }
       </div>
     </div>
   );
