@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Row, Col, Table, Input, Checkbox, Button, Tooltip, Tag } from 'antd';
+import { Row, Col, Table, Input, Button, Tooltip, Tag } from 'antd';
 import Link from 'next/link';
 import moment from 'moment';
 class LentList extends React.Component<any, any> {
   render() {
-    const columns = [{
+    const columns = [
+      {
       title: 'Action',
       key: 'action',
       fixed: 'left',
@@ -40,21 +41,17 @@ class LentList extends React.Component<any, any> {
       title: 'Date Borrow',
       dataIndex: 'dateBorrow',
       key: 'dateBorrow',
-      render: (item: any) => {
-        return (
-          <div><span>{moment(item, 'DD/MM/YYYY') as any}</span></div>
-        )
-      }
+      render: (item: any) => (
+      moment(item).format('DD/MM/YYYY')
+      )
     }, 
     {
       title: 'Date Of Appointment',
       dataIndex: 'dateOfAppointment',
       key: 'dateOfAppointment',
-      render: (item: any) => {
-        return (
-          <div><span>{moment(item, 'DD/MM/YYYY') as any}</span></div>
-        )
-      }
+      render: (item: any) => (
+        moment(item).format('DD/MM/YYYY')
+      )
     }, {
       title: 'Status',
       dataIndex: 'status',
@@ -70,8 +67,8 @@ class LentList extends React.Component<any, any> {
           )
         }
       }
-    }];
-    console.log(this.props);
+    }
+  ];
     return (
       <div style={{ background: '#fff' }}>
         <Row>
@@ -80,27 +77,12 @@ class LentList extends React.Component<any, any> {
               placeholder='Search'
               style={{ width: 500 }}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                this.props.handleSearchChange((e.target as any).value.toLowerCase())
+                this.props.lentPageReducer.handleSearchChange((e.target as any).value.toLowerCase())
               }
             />
           </Col>
-          <Col span={12}>
-            <Checkbox
-              // onChange={(e) => this.props.includeOrExcludeInactivePost(this.props.search, e.target.checked)}
-              defaultChecked={true}
-            >
-              Include Inactive Post
-          </Checkbox>
-          </Col>
         </Row>
-        <Row>
-          <Link href='/dashboard/book/create'>
-            <Button type='primary' icon='plus' style={{ marginTop: '20px' }}>
-              Add New Book
-        </Button>
-          </Link>
-        </Row>
-        <Table columns={columns} dataSource={this.props.lentPageState.data} pagination={{
+        <Table columns={columns as any} dataSource={this.props.lentPageState.data} pagination={{
           total: this.props.lentPageState.total,
           current: this.props.lentPageState.pageNumber,
           showSizeChanger: true,

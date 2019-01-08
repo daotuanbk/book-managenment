@@ -43,11 +43,7 @@ class LentManagenment extends React.Component<any, any> {
             </Row>
             <div style={{background: '#fff'}}>
               <LentList
-                data={this.props.lentPageState.data}
-                // includeOrExcludeInactivePost={this.includeOrExcludeInactivePost}
-                // deactivateOrActivatePost={this.deactivateOrActivatePost}
                 handleSearchChange={this.handleSearchChange}
-                // handleEditFormSubmit={this.handleEditFormSubmit}
                 {...this.props}
               />
             </div>

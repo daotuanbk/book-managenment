@@ -17,7 +17,6 @@ class BookList extends React.Component<any, any> {
             >
               <Button
                 key={`${item.title}_edit`}
-                // onClick={(e) => this.onEditItemClick(item, e)}
                 icon='edit'
                 type='primary'
                 style={{ marginRight: '5px' }}
@@ -67,14 +66,6 @@ class BookList extends React.Component<any, any> {
               }
             />
           </Col>
-          <Col span={12}>
-            <Checkbox
-              // onChange={(e) => this.props.includeOrExcludeInactivePost(this.props.search, e.target.checked)}
-              defaultChecked={true}
-            >
-              Include Inactive Post
-          </Checkbox>
-          </Col>
         </Row>
         <Row>
           <Link href='/dashboard/book/create'>
@@ -83,7 +74,7 @@ class BookList extends React.Component<any, any> {
         </Button>
           </Link>
         </Row>
-        <Table columns={columns} dataSource={this.props.bookPageState.data} pagination={{
+        <Table columns={columns as any} dataSource={this.props.bookPageState.data} pagination={{
           total: this.props.bookPageState.total,
           current: this.props.bookPageState.pageNumber,
           showSizeChanger: true,

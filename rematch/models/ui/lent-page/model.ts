@@ -1,7 +1,7 @@
 import { createModel, ModelConfig } from "@rematch/core";
 import { IErrorHappenPayload, ILentPageState, IGetLentByIdEffect, IUpdateLentEffect, IFetchDataSuccessPayload, IGetLentByIdSuccess } from "./interface";
 import { message } from 'antd';
-import { IFetchDataPayload } from "../books-page/interface";
+import { IFetchDataPayload, IPaginationChange } from "../books-page/interface";
 import { getLentService } from "../../../../service-proxies";
 
 const lentPageModel: ModelConfig<ILentPageState> = createModel({
@@ -64,6 +64,16 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
         data: [payload.data],
       }
     },
+    handlePaginationChange: (
+      state: ILentPageState,
+      payload: IPaginationChange
+    ): ILentPageState => {
+      return {
+        ...state,
+        pageNumber: payload.current,
+        pageSize: payload.pageSize
+      };
+    },
   },
   effects: {
     async fetchDataEffect(
@@ -80,7 +90,7 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
           payload.sortBy,
           payload.asc
         );
-        this.fetchDataSuccess({result});
+        this.fetchDataSuccess({ result });
       } catch (error) {
         console.log(error);
       }
@@ -107,7 +117,7 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
         this.starting();
         const LentService = getLentService();
         const data = await LentService.findLentById(payload._id);
-        this.getLentByIdSuccess({data: data})
+        this.getLentByIdSuccess({ data: data })
       } catch (error) {
         message.error(error.message, 3);
       }

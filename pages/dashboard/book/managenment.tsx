@@ -44,10 +44,7 @@ class BookManagenment extends React.Component<any, any> {
             <div style={{background: '#fff'}}>
               <BookList
                 data={this.props.bookPageState.data}
-                // includeOrExcludeInactivePost={this.includeOrExcludeInactivePost}
-                // deactivateOrActivatePost={this.deactivateOrActivatePost}
                 handleSearchChange={this.handleSearchChange}
-                // handleEditFormSubmit={this.handleEditFormSubmit}
                 {...this.props}
               />
             </div>

@@ -68,7 +68,6 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     },
     createNewBookSuccess: (
       state: IBookPageState,
-      // payload: ICreateNewBookSuccess
     ): IBookPageState => {
       return {
         ...state,
@@ -78,7 +77,6 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     },
     updateBookSuccess: (
       state: IBookPageState,
-      // payload: IUpdateBookSuccess
     ): IBookPageState => {
       return {
         ...state,
@@ -99,7 +97,6 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     },
     onOpenModal: (
       state: IBookPageState,
-      // payload: IGetBookByIdSuccess
     ): IBookPageState => {
       return {
         ...state,
@@ -108,7 +105,6 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     },
     onCancelModal: (
       state: IBookPageState,
-      // payload: IGetBookByIdSuccess
     ): IBookPageState => {
       return {
         ...state,
@@ -117,7 +113,6 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     },
     onConfirmModalSuccess: (
       state: IBookPageState,
-      // payload: IGetBookByIdSuccess
     ): IBookPageState => {
       message.success('Mượn sách thành công');
       return {
@@ -260,7 +255,10 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     ): Promise<void> {
       try {
         this.starting();
-        const borrowPrice = payload.borrowPrice * payload.dateOfAppointment.diff(payload.dateBorrow, 'days');
+        const borrowPrice = payload.borrowPrice * (payload.dateOfAppointment as any).diff(payload.dateBorrow, 'days');
+        if((borrowPrice < 0) ||(moment(Date.now()).format('YYYY MM DD') === moment(payload.dateOfAppointment as any).format('YYYY MM DD'))) {
+          message.error('Vui lòng chọn ngày hợp lệ')
+        } else {
         const lentService = getLentService();
         const data = await lentService.create({
           bookId: String(payload.bookId),
@@ -271,6 +269,7 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
           status: payload.status
         })
         this.onConfirmModalSuccess({data: data})
+      }
       } catch (error) {
         message.error(error.message, 3);
       }
