@@ -42,6 +42,29 @@ const setupPublicRoutes = (server: express.Express, app: next.Server) => {
       booksData,
     });
   });
+  
+  server.get('/lent-history/:id', Authorize('Administrator'), async (req, res) => {
+    const lentsData = await lentManagenmentService.findLentById(req.query.id);
+    app.render(req, res, '/lent-history', {
+      ...req.query,
+      lentsData,
+    });
+  });
+
+  server.get('/dashboard/book/edit/:id', Authorize('Administrator'), async (req, res) => {
+    const actualPage = '/dashboard/book/edit';
+    const bookData: any = await booksManagenmentService.findBookById(req.params.id);
+    // const queryParams = { id: req.params.id, bookData };
+    app.render(req, res, actualPage, {
+      ...req.query,
+      id: req.params.id,
+      bookData,
+    }, Object.assign({
+      id: req.params.id,
+      slug: req.params.slug,
+      name: req.params.name,
+    }));
+  });
 
   server.get('/book/:id', Authorize(''), async (req, res) => {
     const actualPage = '/book-detail';
@@ -117,22 +140,6 @@ const setupPublicRoutes = (server: express.Express, app: next.Server) => {
         ...req.query,
         // booksData,
       });
-    });
-    
-
-    server.get('/dashboard/book/edit/:id', Authorize('Administrator'), async (req, res) => {
-      const actualPage = '/dashboard/book/edit';
-      const bookData: any = await booksManagenmentService.findBookById(req.params.id);
-      // const queryParams = { id: req.params.id, bookData };
-      app.render(req, res, actualPage, {
-        ...req.query,
-        id: req.params.id,
-        bookData,
-      }, Object.assign({
-        id: req.params.id,
-        slug: req.params.slug,
-        name: req.params.name,
-      }));
     });
 
     server.get('/dashboard/book/edit', Authorize('Administrator'), (req, res) => {

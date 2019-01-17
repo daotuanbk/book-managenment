@@ -74,6 +74,23 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
         pageSize: payload.pageSize
       };
     },
+    updateLentSuccess: (
+      state: ILentPageState,
+      payload: any,
+    ): ILentPageState  => {
+      return {
+        ...state,
+        data: state.data.map((value, _index) => {
+          if (value._id === payload.result._id) {
+            return payload.result
+          } else {
+            return value
+          }
+        }),
+        isBusy: false,
+        errorMessage: '',
+      };
+    },
   },
   effects: {
     async fetchDataEffect(
@@ -102,8 +119,8 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
       try {
         this.starting();
         const LentService = getLentService();
-        await LentService.update(payload);
-        this.updateLentSuccess();
+        const result = await LentService.update(payload);
+        this.updateLentSuccess({ result : result });
         message.success('Update Lent Successful', 3);
       } catch (error) {
         message.error(error.message, 3);
@@ -116,7 +133,7 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
       try {
         this.starting();
         const LentService = getLentService();
-        const data = await LentService.findLentById(payload._id);
+        const data = await LentService.findLetById(payload._id);
         this.getLentByIdSuccess({ data: data })
       } catch (error) {
         message.error(error.message, 3);

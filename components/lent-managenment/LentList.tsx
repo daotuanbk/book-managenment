@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Row, Col, Table, Input, Button, Tooltip, Tag } from 'antd';
-import Link from 'next/link';
 import moment from 'moment';
 class LentList extends React.Component<any, any> {
   render() {
@@ -12,20 +11,22 @@ class LentList extends React.Component<any, any> {
       width: 150,
       render: (item, _record) => (
         <div>
-          <Link href={`/dashboard/book/edit/${item._id}`}>
-            <Tooltip
-              key={`${item.title}_edit`}
-              title='Edit'
+          <Tooltip
+              key={`${item.title}_lock`}
+              title={item.status === 'deactive' ? 'Activate' : 'Deactivate'}
             >
               <Button
-                key={`${item.title}_edit`}
-                // onClick={(e) => this.onEditItemClick(item, e)}
-                icon='edit'
+                key={`${item.title}_lock`}
+                icon={item.status === 'deactive' ? 'unlock' : 'lock'}
                 type='primary'
                 style={{ marginRight: '5px' }}
+                onClick={() => {
+                  this.props.lentPageReducer.updateLentEffect({
+                  _id: item._id,
+                  status: item.status === 'deactive' ? 'active' : 'deactive', 
+                })}}
               />
             </Tooltip>
-          </Link>
         </div>
       ),
     }, {
@@ -91,7 +92,7 @@ class LentList extends React.Component<any, any> {
             String(item),
           ),
           onChange: (page, pageSize) => {
-            this.props.lentPageReducer.fetchDataEffect({
+            this.props.lentPageReducer.fetch({
               search: this.props.lentPageState.searchInput,
               pageNumber: page,
               pageSize: pageSize,

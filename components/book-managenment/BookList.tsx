@@ -23,6 +23,23 @@ class BookList extends React.Component<any, any> {
               />
             </Tooltip>
           </Link>
+          <Tooltip
+              key={`${item.title}_lock`}
+              title={item.status === 'deactive' ? 'Activate' : 'Deactivate'}
+            >
+              <Button
+                key={`${item.title}_lock`}
+                icon={item.status === 'deactive' ? 'unlock' : 'lock'}
+                type='primary'
+                style={{ marginRight: '5px' }}
+                onClick={() => {
+                  this.props.bookPageReducer.updateBookEffect({
+                  _id: item._id,
+                  quantity: item.quantity,
+                  status: item.status === 'deactive' ? 'active' : 'deactive', 
+                })}}
+              />
+            </Tooltip>
         </div>
       ),
     }, {
@@ -48,12 +65,11 @@ class BookList extends React.Component<any, any> {
           )
         } else if (item === 'outstock') {
           return (
-            <Tag color='red'>Out-of-stock</Tag>
+            <Tag color='orange'>Out-of-stock</Tag>
           )
         }
       }
     }];
-    console.log(this.props);
     return (
       <div style={{ background: '#fff' }}>
         <Row>

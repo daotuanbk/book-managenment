@@ -14,7 +14,7 @@ export interface IUser extends Document, IsAuditable, HasActive {
   i18n: string;
   permissions: string[];
   roles: string[];
-
+  address: string;
   externalLogin: {
     google: {
       id: string;
@@ -52,6 +52,7 @@ export interface IFindUserDetail {
   roles: string[];
   isActive: boolean;
   emailConfirmed: boolean;
+  address: string;
 }
 
 export interface IFindUsersResult extends PageableResult<IFindUserDetail> {}
@@ -63,6 +64,7 @@ export interface ICreateUserInput extends HasCreationAuditInfo, HasActive {
   lastName: string;
   phoneNumber: string;
   roles: string[];
+  address: string;
 }
 
 export interface IActivateUser extends HasModificationAuditInfo {
@@ -82,6 +84,7 @@ export interface IUpdateUserInput extends HasModificationAuditInfo {
   roles?: string[];
   fullName?: string;
   normalizedFullName?: string;
+  address?: string;
 
   externalLogin?: {
     google?: {

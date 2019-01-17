@@ -11,6 +11,7 @@ const UsersSchema = new mongoose.Schema(addAuditSchema(addActiveSchema({
   fullName: String,
   normalizedFullName: String,
   dob: Date,
+  address: String,
   phoneNumber: String,
   i18n: {
     type: String,

@@ -6,8 +6,9 @@ import BooksModel from "../book-managenment/mongoose";
 
 const findLentById = async (lentId: string): Promise<IFindLentDetail> => {
   try {
+    console.log(lentId);
     return await LentModel
-    .findOne({_id: lentId})
+    .find({userId: { $regex: `${lentId}`, $options: 'i' }})
     .populate('userId')
     .populate('bookId')
     .exec() as any;
@@ -74,6 +75,8 @@ const editLent = async (body: IUpdateLentDetail): Promise<IFindLentDetail> => {
   try {
     return await LentModel
       .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
+      .populate('userId')
+      .populate('bookId')
       .exec() as any;
   } catch (error) {
     throw new Error(error.message || 'Internal server error.');

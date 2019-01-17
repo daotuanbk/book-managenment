@@ -38,15 +38,15 @@ export interface IOnChangeFileList {
 
 export interface IUpdateBookEffect {
   _id: string;
-  title?: string,
-  description?: string,
-  author?: string,
-  language?: string,
-  categories?: string[],
-  coverUrl?: string,
-  quantity?: number,
-  borrowPrice?: number,
-  status?: string,
+  title?: string;
+  description?: string;
+  author?: string;
+  language?: string;
+  categories?: string[];
+  coverUrl?: string;
+  quantity?: number;
+  borrowPrice?: number;
+  status?: string;
 }
 
 export interface ISearchChangeEffect {

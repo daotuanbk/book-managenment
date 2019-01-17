@@ -44,7 +44,7 @@ class BookDetail extends React.Component<any, any> {
     const dateFormat = 'DD/MM/YYYY';
     return (
       <div>
-        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} />              
+        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} roles={this.props.profileState.roles} />           
         <Container>
           <Row style={{marginTop: '20px'}}>
             <Col span={10} style={{padding: '5px'}}>

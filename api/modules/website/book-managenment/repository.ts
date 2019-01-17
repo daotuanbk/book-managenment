@@ -69,20 +69,20 @@ const findExistedBook = async (body: ICreateBookInput): Promise<IFindBookDetail>
 
 const editBook = async (body: IUpdateBookDetail): Promise<IFindBookDetail> => {
   try {
-    if (body.quantity === 0) {
-      await BooksModel
-      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
+    if (body.status === 'deactive') {
       return await BooksModel
-      .findByIdAndUpdate({ _id: body._id}, { $set: {status: 'outstock'}})
+      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
+      .exec() as any
+    } else if (body.quantity === 0) {
+      return await BooksModel
+      .findOneAndUpdate({ _id: body._id }, { $set: {...body, status: 'outstock'} }, {new: true})
       .exec() as any
     } else if (body.status === 'outstock') {
-      await BooksModel
-      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
       return await BooksModel
-      .findByIdAndUpdate({ _id: body._id}, { $set: {quantity: 0}})
+      .findOneAndUpdate({ _id: body._id }, { $set: {...body, quantity: 0} }, {new: true})
       .exec() as any
     } else {
-    return await BooksModel
+      return await BooksModel
       .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
       .exec() as any;
     }

@@ -93,10 +93,11 @@ async function processResponse<T>(response: Response): Promise<T> {
 
 const LentServiceProxy = (baseUrl = '', _token = '') => {
   return {
-    findLentById: async (
+    findLetById: async (
       lentId: string
     ): Promise <IFindLentDetail> => {
-      let url = baseUrl + '/lent/find/';
+      console.log('id', lentId);
+      let url = baseUrl + '/lent/find-by-id/';
       if (lentId !== undefined) {
         url += encodeURIComponent('' + lentId);
       }

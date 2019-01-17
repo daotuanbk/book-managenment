@@ -19,7 +19,7 @@ class AdminLayout extends React.Component<MainPageProps, any> {
     this.props.profileReducer.logOut();
 
     // Clear Cookie
-    jsCookie.remove('token', {domain: config.nextjs.cookieDomain});
+    jsCookie.remove('token', { domain: config.nextjs.cookieDomain });
 
     // Redirect
     Router.push('/login');
@@ -41,7 +41,7 @@ class AdminLayout extends React.Component<MainPageProps, any> {
 
           <Layout>
             <Layout.Header style={{ padding: 0 }}>
-        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} />
+              <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} roles={this.props.profileState.roles} />
             </Layout.Header>
 
             <Layout.Content>

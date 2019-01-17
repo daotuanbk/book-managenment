@@ -2,7 +2,7 @@ import * as React from 'react';
 import Container from '../components/book-managenment/Container';
 import withRematch from '../rematch/withRematch';
 import { initStore } from '../rematch/store';
-import { Row, Col, Card, Button } from 'antd';
+import { Row, Col, Card, Button, Pagination } from 'antd';
 import Header from '../components/admin-layout/Header/Header';
 import * as jsCookie from 'js-cookie';
 import config from '../configs';
@@ -61,10 +61,20 @@ class LandingPage extends React.Component<any, any> {
     })
     return (
       <div>
-        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} />
+        <Header userEmail={this.props.profileState.email} logOut={this.logOut} _id={this.props.profileState._id} roles={this.props.profileState.roles} />
         <Container>
           <Row>
             {renderBooks}
+          </Row>
+          <Row>
+            <Pagination pageSize={12} total={this.props.bookPageState.data.total} onChange={(page, pageSize) => this.props.bookPageReducer.fetchDataEffect({
+              search: '',
+              pageNumber: page,
+              pageSize: pageSize,
+              sortBy: this.props.bookPageState.sortBy,
+              asc: this.props.bookPageState.asc,
+            })}
+            style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}/>
           </Row>
         </Container>
       </div>

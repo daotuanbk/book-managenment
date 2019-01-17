@@ -77,9 +77,17 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     },
     updateBookSuccess: (
       state: IBookPageState,
+      payload: any,
     ): IBookPageState => {
       return {
         ...state,
+        data: state.data.map((value, _index) => {
+          if (value._id === payload.result._id) {
+            return payload.result
+          } else {
+            return value
+          }
+        }),
         isBusy: false,
         errorMessage: '',
       };
@@ -118,7 +126,7 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
       return {
         ...state,
         modalVisible: false,
-        data: state.data.map ((value, index) => {
+        data: state.data.map((value, index) => {
           if (index === 0) {
             return {
               ...value,
@@ -163,7 +171,7 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
           payload.sortBy,
           payload.asc
         );
-        this.fetchDataSuccess({result});
+        this.fetchDataSuccess({ result });
       } catch (error) {
         console.log(error);
       }
@@ -174,13 +182,13 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     ): Promise<void> {
       try {
         this.starting();
-        const bookService = getBooksService();        
+        const bookService = getBooksService();
         const result = await bookService.findBook(
           payload.searchValue,
-          rootState.blogsPageModel.pageNumber,
-          rootState.blogsPageModel.pageSize,
-          rootState.blogsPageModel.sortBy,
-          rootState.blogsPageModel.asc,
+          rootState.booksPageModel.pageNumber,
+          rootState.booksPageModel.pageSize,
+          rootState.booksPageModel.sortBy,
+          rootState.booksPageModel.asc,
         );
         this.fetchDataSuccess({ result });
       } catch (error) {
@@ -193,7 +201,7 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     ): Promise<void> {
       try {
         this.starting();
-        const bookService = getBooksService();                
+        const bookService = getBooksService();
         const newBook = await bookService.create({
           ...payload,
           coverUrl: 'none',
@@ -229,8 +237,8 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
       try {
         this.starting();
         const bookService = getBooksService();
-        await bookService.update(payload);
-        this.updateBookSuccess();
+        const result = await bookService.update(payload);
+        this.updateBookSuccess({ result: result });
         message.success('Update Book Successful', 3);
       } catch (error) {
         message.error(error.message, 3);
@@ -244,7 +252,7 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
         this.starting();
         const bookService = getBooksService();
         const data = await bookService.findBookById(payload._id);
-        this.getBookByIdSuccess({data: data})
+        this.getBookByIdSuccess({ data: data })
       } catch (error) {
         message.error(error.message, 3);
       }
@@ -256,20 +264,20 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
       try {
         this.starting();
         const borrowPrice = payload.borrowPrice * (payload.dateOfAppointment as any).diff(payload.dateBorrow, 'days');
-        if((borrowPrice < 0) ||(moment(Date.now()).format('YYYY MM DD') === moment(payload.dateOfAppointment as any).format('YYYY MM DD'))) {
+        if ((borrowPrice < 0) || (moment(Date.now()).format('YYYY MM DD') === moment(payload.dateOfAppointment as any).format('YYYY MM DD'))) {
           message.error('Vui lòng chọn ngày hợp lệ')
         } else {
-        const lentService = getLentService();
-        const data = await lentService.create({
-          bookId: String(payload.bookId),
-          userId: String(payload.userId),
-          dateBorrow: payload.dateBorrow,
-          dateOfAppointment: payload.dateOfAppointment,
-          borrowPrice: borrowPrice,
-          status: payload.status
-        })
-        this.onConfirmModalSuccess({data: data})
-      }
+          const lentService = getLentService();
+          const data = await lentService.create({
+            bookId: String(payload.bookId),
+            userId: String(payload.userId),
+            dateBorrow: payload.dateBorrow,
+            dateOfAppointment: payload.dateOfAppointment,
+            borrowPrice: borrowPrice,
+            status: payload.status
+          })
+          this.onConfirmModalSuccess({ data: data })
+        }
       } catch (error) {
         message.error(error.message, 3);
       }

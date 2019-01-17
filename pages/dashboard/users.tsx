@@ -351,6 +351,21 @@ class UsersPage extends React.Component<any, any> {
                     />,
                   )}
                 </Form.Item>
+                <Form.Item label='Address'>
+                  {getFieldDecorator('address', {
+                    rules: [
+                      {required: true, message: 'Please Fill in Your Address'},
+                    ],
+                    initialValue: this.props.currentUser.address,
+                  })(
+                    <Input
+                      name="address"
+                      prefix={<Icon type="address" />}
+                      placeholder='Address'
+                      onChange={(e: any) => this.props.userInfoChange({address: e.target.value})}
+                    />,
+                  )}
+                </Form.Item>
               </Form>
             </div>
             <div className="select-roles">
