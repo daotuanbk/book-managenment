@@ -157,6 +157,50 @@ const BooksServiceProxy = (baseUrl = '', _token = '') => {
         processResponse<IFindBookResult>(response)
       );
     },
+    findActiveBook: async (
+      searchInput: string | null | undefined,
+      pageNumber: number | null | undefined,
+      pageSize: number | null | undefined,
+      sortBy: string,
+      asc: boolean
+    ): Promise<IFindBookResult> => {
+      let url = baseUrl + '/book/find-active-book?';
+      if (searchInput !== undefined) {
+        url += 'searchInput=' + encodeURIComponent('' + searchInput) + '&';
+      }
+      if (pageNumber !== undefined) {
+        url += 'pageNumber=' + encodeURIComponent('' + pageNumber) + '&';
+      }
+      if (pageSize !== undefined) {
+        url += 'pageSize=' + encodeURIComponent('' + pageSize) + '&';
+      }
+      if (sortBy === undefined || sortBy === null) {
+        throw new Error(
+          'The parameter \'sortBy\' must be defined and cannot be null.'
+        );
+      } else {
+        url += 'sortBy=' + encodeURIComponent('' + sortBy) + '&';
+      }
+      if (asc === undefined || asc === null) {
+        throw new Error(
+          'The parameter \'asc\' must be defined and cannot be null.'
+        );
+      } else {
+        url += 'asc=' + encodeURIComponent('' + asc) + '&';
+      }
+      url = url.replace(/[?&]$/, '');
+      let options = {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      return fetch(url, options as any).then((response: Response) =>
+        processResponse<IFindBookResult>(response)
+      );
+    },
     create: async (
       createBookInput: ICreateBookInput
     ): Promise <IFindBookDetail> => {

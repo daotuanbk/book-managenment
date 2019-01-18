@@ -16,6 +16,13 @@ const findBook = async (query: IFindBookQuery): Promise<IFindBookResult> => {
   return await bookRepository.findBook(query);
 };
 
+const findActiveBook = async (query: IFindBookQuery): Promise<IFindBookResult> => {
+  if (!query) {
+    throw new Error('Input not found');
+  }
+  return await bookRepository.findActiveBook(query);
+};
+
 const createBook = async (body: ICreateBookInput): Promise<IFindBookDetail> => {
   const validationRule = Joi.object().keys({
     title: Joi.string().required(),
@@ -79,4 +86,5 @@ export default {
   deleteBook,
   createBook,
   editBook,
+  findActiveBook
 }

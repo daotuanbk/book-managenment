@@ -176,6 +176,25 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
         console.log(error);
       }
     },
+    async fetchActiveDataEffect(
+      payload: IFetchDataPayload,
+      _rootState: any
+    ): Promise<void> {
+      try {
+        this.starting();
+        const bookService = getBooksService();
+        const result = await bookService.findActiveBook(
+          payload.search,
+          payload.pageNumber,
+          payload.pageSize,
+          payload.sortBy,
+          payload.asc
+        );
+        this.fetchDataSuccess({ result });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async searchChangeEffect(
       payload: ISearchChangeEffect,
       rootState: any
@@ -263,23 +282,27 @@ const booksPageModel: ModelConfig<IBookPageState> = createModel({
     ): Promise<void> {
       try {
         this.starting();
-        const borrowPrice = payload.borrowPrice * (payload.dateOfAppointment as any).diff(payload.dateBorrow, 'days');
-        if ((borrowPrice < 0) || (moment(Date.now()).format('YYYY MM DD') === moment(payload.dateOfAppointment as any).format('YYYY MM DD'))) {
+        if (moment(payload.dateOfAppointment as any).toString() === moment(payload.dateBorrow as any).toString()) {
           message.error('Vui lòng chọn ngày hợp lệ')
         } else {
-          const lentService = getLentService();
-          const data = await lentService.create({
-            bookId: String(payload.bookId),
-            userId: String(payload.userId),
-            dateBorrow: payload.dateBorrow,
-            dateOfAppointment: payload.dateOfAppointment,
-            borrowPrice: borrowPrice,
-            status: payload.status
-          })
-          this.onConfirmModalSuccess({ data: data })
+          const borrowPrice = payload.borrowPrice * (payload.dateOfAppointment as any).diff(payload.dateBorrow, 'days');
+          if (borrowPrice && ((borrowPrice < 0) || (moment(Date.now()).format('YYYY MM DD') === moment(payload.dateOfAppointment as any).format('YYYY MM DD')))) {
+            message.error('Vui lòng chọn ngày hợp lệ')
+          } else {
+            const lentService = getLentService();
+            const data = await lentService.create({
+              bookId: String(payload.bookId),
+              userId: String(payload.userId),
+              dateBorrow: payload.dateBorrow,
+              dateOfAppointment: payload.dateOfAppointment,
+              borrowPrice: borrowPrice,
+              status: payload.status
+            })
+            this.onConfirmModalSuccess({ data: data })
+          }
         }
       } catch (error) {
-        message.error(error.message, 3);
+        message.error('Vui lòng chọn ngày hợp lệ')     
       }
     },
   },

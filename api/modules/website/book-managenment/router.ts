@@ -22,6 +22,15 @@ bookManagenmentRouter.get('/find', async (req, res) => {
   }
 });
 
+bookManagenmentRouter.get('/find-active-book', async (req, res) => {
+  try {
+    const result = await bookManagenmentService.findActiveBook(validatePagination(req.query));
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 bookManagenmentRouter.post('/create', async (req, res) => {
   try {
     const result = await bookManagenmentService.createBook(req.body);

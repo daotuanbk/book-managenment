@@ -2,7 +2,7 @@ import * as React from 'react';
 import Container from '../components/book-managenment/Container';
 import withRematch from '../rematch/withRematch';
 import { initStore } from '../rematch/store';
-import { Row, Col, Card, Button, Pagination } from 'antd';
+import { Row, Col, Card, Button, Pagination, Tag } from 'antd';
 import Header from '../components/admin-layout/Header/Header';
 import * as jsCookie from 'js-cookie';
 import config from '../configs';
@@ -13,7 +13,7 @@ class LandingPage extends React.Component<any, any> {
   static async getInitialProps(props: any) {
     if (!props.req) {
       const bookPageState = props.store.getState().booksPageModel;
-      await props.store.dispatch.booksPageModel.fetchDataEffect({
+      await props.store.dispatch.booksPageModel.fetchActiveDataEffect({
         search: bookPageState.searchInput,
         pageNumber: bookPageState.pageNumber,
         pageSize: bookPageState.indexPageSize,
@@ -51,7 +51,10 @@ class LandingPage extends React.Component<any, any> {
               description={(<div>
                 <span>{value.description.length > 70 ? value.description.splice(0, 70) : value.description}<br/></span>
               <span>Còn <b>{value.quantity}</b> sản phẩm<br/></span>
-              <span>Đơn giá: <b>{value.borrowPrice}</b> đ</span>
+              <span>Đơn giá: <b>{value.borrowPrice}</b> đ</span><br/><br/>
+              {
+                value.status === 'active' ? <Tag color='green'>Còn hàng</Tag> : <Tag color='red'>Hết hàng</Tag>
+              }
               </div>)}
             />
           </Card>
@@ -72,7 +75,7 @@ class LandingPage extends React.Component<any, any> {
               pageNumber: page,
               pageSize: pageSize,
               sortBy: this.props.bookPageState.sortBy,
-              asc: this.props.bookPageState.asc,
+              asc: this.props.bookPageState.asc
             })}
             style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}/>
           </Row>

@@ -4,9 +4,9 @@ import { validatePagination } from '../../../core/helpers';
 
 const lentManagenmentRouter = express.Router();
 
-lentManagenmentRouter.get('/find-by-id/:id', async (req, res) => {
+lentManagenmentRouter.get('/find-by-user-id/', async (req, res) => {
   try {
-    const result = await lentManagenmentService.findLentById(req.params.id);
+    const result = await lentManagenmentService.findLentByUserId(req.query);
     res.status(200).send(result);
   } catch (err) {
     res.status(500).send(err.message);

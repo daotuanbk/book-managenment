@@ -1,5 +1,5 @@
 import { createModel, ModelConfig } from "@rematch/core";
-import { IErrorHappenPayload, ILentPageState, IGetLentByIdEffect, IUpdateLentEffect, IFetchDataSuccessPayload, IGetLentByIdSuccess } from "./interface";
+import { IErrorHappenPayload, ILentPageState, IGetLentByIdEffect, IUpdateLentEffect, IFetchDataSuccessPayload, IGetLentByIdSuccess, IGetLentByUserId } from "./interface";
 import { message } from 'antd';
 import { IFetchDataPayload, IPaginationChange } from "../books-page/interface";
 import { getLentService } from "../../../../service-proxies";
@@ -126,17 +126,23 @@ const lentPageModel: ModelConfig<ILentPageState> = createModel({
         message.error(error.message, 3);
       }
     },
-    async getLentByIdEffect(
-      payload: IGetLentByIdEffect,
+    async getLentByUserIdEffect(
+      payload: IGetLentByUserId,
       _rootState: any
     ): Promise<void> {
       try {
         this.starting();
         const LentService = getLentService();
-        const data = await LentService.findLetById(payload._id);
-        this.getLentByIdSuccess({ data: data })
+        const result = await LentService.findLentByUserId(
+          payload.userId,
+          payload.pageNumber,
+          payload.pageSize,
+          payload.sortBy,
+          payload.asc
+        );
+        this.fetchDataSuccess({ result });
       } catch (error) {
-        message.error(error.message, 3);
+        console.log(error);
       }
     },
   },

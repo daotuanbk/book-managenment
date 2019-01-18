@@ -26,13 +26,13 @@ const Header = (props: any) => {
       {props.roles.indexOf('Administrator') !== -1 ?
         <Menu.Item>
           <Link href='/dashboard'>
-            <a><Icon type="user" className="user-menu-item-icon" /> Admin</a>
+            <a><Icon type="laptop" className="user-menu-item-icon" /> Admin</a>
           </Link>
         </Menu.Item> : <div></div>}
 
         <Menu.Item>
           <Link href={`/lent-history/${props._id}`}>
-            <a><Icon type="user" className="user-menu-item-icon" /> Lent History</a>
+            <a><Icon type="book" className="user-menu-item-icon" /> Lent History</a>
           </Link>
         </Menu.Item>
       <Menu.Divider />

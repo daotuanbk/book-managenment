@@ -1,20 +1,36 @@
 import LentModel from "./mongoose";
 import logger from "../../../../api/core/logger/log4js";
 import { ObjectID } from "mongodb";
-import { IFindLentDetail, IFindLentQuery, IFindLentResult, ICreateLentInput, IUpdateLentDetail } from "./interface";
+import { IFindLentDetail, IFindLentQuery, IFindLentResult, ICreateLentInput, IUpdateLentDetail, IFindLentByUserIdQuery } from "./interface";
 import BooksModel from "../book-managenment/mongoose";
 
-const findLentById = async (lentId: string): Promise<IFindLentDetail> => {
+const findLentByUserId = async (query: IFindLentByUserIdQuery): Promise<IFindLentResult> => {
   try {
-    console.log(lentId);
-    return await LentModel
-    .find({userId: { $regex: `${lentId}`, $options: 'i' }})
-    .populate('userId')
-    .populate('bookId')
-    .exec() as any;
+    const totalPromise = await LentModel
+    .find(
+        query.userId ? { userId: { $regex: `${query.userId}`, $options: 'i' } } : {}
+    )
+    .countDocuments()
+    .exec();
+
+    const data = await LentModel
+      .find({
+        $or: [
+          query.userId ? { userId: { $regex: `${query.userId}`, $options: 'i' } } : {},
+        ]
+      })
+      .sort((query.asc as any) === 'true' ? query.sortBy : `-${query.sortBy}`)
+      .skip((query.pageNumber - 1) * query.pageSize)
+      .limit(Number(query.pageSize))
+      .populate('userId')
+      .populate('bookId')
+      .exec();
+    return {
+      data,
+      total: totalPromise
+    };
   } catch (error) {
-    logger.error(`${error.message} ${error.stack}`);
-    throw new Error('Internal Server Error');
+    throw new Error(error.message || 'Internal server error.');
   }
 };
 
@@ -28,13 +44,7 @@ const findLent = async (query: IFindLentQuery): Promise<IFindLentResult> => {
     .exec();
 
     const data = await LentModel
-      .find({
-        $or: [
-          query.searchInput ? { title: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
-          query.searchInput ? { description: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
-          query.searchInput ? { author: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
-        ]
-      })
+      .find({})
       .sort((query.asc as any) === 'true' ? query.sortBy : `-${query.sortBy}`)
       .skip((query.pageNumber - 1) * query.pageSize)
       .limit(Number(query.pageSize))
@@ -95,7 +105,7 @@ const deleteLent = async (_id: string): Promise<void> => {
 
 export default {
   findLent,
-  findLentById,
+  findLentByUserId,
   deleteLent,
   createLent,
   editLent,

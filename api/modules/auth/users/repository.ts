@@ -27,7 +27,7 @@ const findUsers = async (query: IFindUsersQuery): Promise<IFindUsersResult> => {
       .sort((query.asc as any) === 'true' ? query.sortBy : `-${query.sortBy}`)
       .skip((query.pageNumber - 1) * query.pageSize)
       .limit(Number(query.pageSize))
-      .select(`_id email profileImgUrl firstName lastName fullName dob phoneNumber i18n permissions roles isActive emailConfirmed`)
+      .select(`_id email profileImgUrl firstName lastName fullName dob phoneNumber i18n permissions roles isActive emailConfirmed address`)
       .exec();
 
     const [total, data] = await Promise.all([totalPromise, dataPromise]);
@@ -45,7 +45,7 @@ const findUsers = async (query: IFindUsersQuery): Promise<IFindUsersResult> => {
 const findUserById = async (userId: string): Promise<IFindUserDetail> => {
   try {
     return await UsersModel.findOne({_id: userId})
-    .select(`_id email profileImgUrl firstName lastName fullName dob phoneNumber i18n permissions roles isActive emailConfirmed`)
+    .select(`_id email profileImgUrl firstName lastName fullName dob phoneNumber i18n permissions roles isActive emailConfirmed address`)
     .exec();
   } catch (error) {
     logger.error(`${error.message} ${error.stack}`);
@@ -56,7 +56,7 @@ const findUserById = async (userId: string): Promise<IFindUserDetail> => {
 const findUserByEmail = async (email: string): Promise<IFindUserDetail> => {
   try {
     return await UsersModel.findOne({email: email})
-    .select(`_id email profileImgUrl firstName lastName fullName dob phoneNumber i18n permissions roles isActive emailConfirmed`)
+    .select(`_id email profileImgUrl firstName lastName fullName dob phoneNumber i18n permissions roles isActive emailConfirmed address`)
     .exec();
   } catch (error) {
     logger.error(`${error.message} ${error.stack}`);

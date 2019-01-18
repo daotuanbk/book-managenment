@@ -38,3 +38,11 @@ export interface IFetchDataSuccessPayload {
 export interface IGetLentByIdSuccess {
   data: IFindBookDetail;
 }
+
+export interface IGetLentByUserId {
+  userId: string;
+  pageNumber: number;
+  pageSize: number;
+  sortBy: string;
+  asc: boolean
+}

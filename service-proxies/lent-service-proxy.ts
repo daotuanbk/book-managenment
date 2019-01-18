@@ -93,13 +93,36 @@ async function processResponse<T>(response: Response): Promise<T> {
 
 const LentServiceProxy = (baseUrl = '', _token = '') => {
   return {
-    findLetById: async (
-      lentId: string
-    ): Promise <IFindLentDetail> => {
-      console.log('id', lentId);
-      let url = baseUrl + '/lent/find-by-id/';
-      if (lentId !== undefined) {
-        url += encodeURIComponent('' + lentId);
+    findLentByUserId: async (
+      userId: string | null | undefined,
+      pageNumber: number | null | undefined,
+      pageSize: number | null | undefined,
+      sortBy: string,
+      asc: boolean
+    ): Promise <IFindLentResult> => {
+      let url = baseUrl + '/lent/find-by-user-id?';
+      if (userId !== undefined) {
+        url += 'userId=' + encodeURIComponent('' + userId) + '&';
+      }
+      if (pageNumber !== undefined) {
+        url += 'pageNumber=' + encodeURIComponent('' + pageNumber) + '&';
+      }
+      if (pageSize !== undefined) {
+        url += 'pageSize=' + encodeURIComponent('' + pageSize) + '&';
+      }
+      if (sortBy === undefined || sortBy === null) {
+        throw new Error(
+          'The parameter \'sortBy\' must be defined and cannot be null.'
+        );
+      } else {
+        url += 'sortBy=' + encodeURIComponent('' + sortBy) + '&';
+      }
+      if (asc === undefined || asc === null) {
+        throw new Error(
+          'The parameter \'asc\' must be defined and cannot be null.'
+        );
+      } else {
+        url += 'asc=' + encodeURIComponent('' + asc) + '&';
       }
       url = url.replace(/[?&]$/, '');
       let options = {
@@ -111,7 +134,7 @@ const LentServiceProxy = (baseUrl = '', _token = '') => {
       };
 
       return fetch(url, options as any).then((response: Response) =>
-        processResponse<IFindLentDetail>(response)
+        processResponse<IFindLentResult>(response)
       );
     },
     findLent: async (

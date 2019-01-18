@@ -1,12 +1,12 @@
 import LentRepository from './repository';
 import * as Joi from 'joi';
-import { IFindLentResult, IFindLentQuery, ICreateLentInput, IFindLentDetail, IUpdateLentDetail } from './interface';
+import { IFindLentResult, IFindLentQuery, ICreateLentInput, IFindLentDetail, IUpdateLentDetail, IFindLentByUserIdQuery } from './interface';
 
-const findLentById = async (lentId: string): Promise<IFindLentDetail> => {
-  if (!lentId) {
-    throw new Error('LentId not found!');
+const findLentByUserId = async (query: IFindLentByUserIdQuery): Promise<IFindLentResult> => {
+  if (!query) {
+    throw new Error('Query not found!');
   }
-  return await LentRepository.findLentById(lentId);
+  return await LentRepository.findLentByUserId(query);
 };
 
 const findLent = async (query: IFindLentQuery): Promise<IFindLentResult> => {
@@ -63,7 +63,7 @@ const deleteLent = async (_id: string): Promise<void> => {
 
 export default {
   findLent,
-  findLentById,
+  findLentByUserId,
   deleteLent,
   createLent,
   editLent,

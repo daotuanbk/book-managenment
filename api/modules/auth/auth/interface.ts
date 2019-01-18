@@ -11,9 +11,9 @@ export interface ITokenData {
   dob: Date;
   phoneNumber: string;
   i18n: string;
+  address: string;
   permissions: string[];
   roles: string[];
-
   exp?: number;
   iat?: number;
 }

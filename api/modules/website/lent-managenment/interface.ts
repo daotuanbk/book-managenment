@@ -48,3 +48,12 @@ export interface IFindLentQuery {
   sortBy: string;
   asc: boolean;
 }
+
+export interface IFindLentByUserIdQuery {
+  userId: string;
+  pageNumber: number;
+  pageSize: number;
+  sortBy: string;
+  asc: boolean;
+}
+

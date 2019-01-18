@@ -43,6 +43,7 @@ const createToken = async (user: IUser): Promise<string> => {
     i18n: user.i18n,
     permissions: user.permissions ? user.permissions : [],
     roles: user.roles ? user.roles : [],
+    address: user.address? user.address : '',
   };
   const expiresIn = config.auth.expiresIn;
 

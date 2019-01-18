@@ -19,16 +19,6 @@ class LentManagenment extends React.Component<any, any> {
       props.store.dispatch.lentPageModel.fetchDataSuccess({ result: props.query.lentsData });
     }
   }
-  handleSearchChange = (searchValue: string) => {
-    this.props.lentPageReducer.onChangeSearchValue({ searchValue: searchValue });
-    this.props.lentPageReducer.fetchDataEffect({
-      search: searchValue,
-      pageNumber: this.props.lentPageState.pageNumber,
-      pageSize: this.props.lentPageState.pageSize,
-      sortBy: this.props.lentPageState.sortBy,
-      asc: this.props.lentPageState.asc,
-    })
-  }
   render() {
     return (
       <div>
@@ -43,7 +33,6 @@ class LentManagenment extends React.Component<any, any> {
               </Row>
               <div style={{ background: '#fff' }}>
                 <LentList
-                  handleSearchChange={this.handleSearchChange}
                   {...this.props}
                 />
               </div>

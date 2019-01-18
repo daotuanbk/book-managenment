@@ -55,6 +55,8 @@ mongoose.connect(`${config.database.mongoConnectionString}`, {
     failLoginTryCount: 0,
     emailConfirmed: true,
     language: 'en',
+    address: 'admin address',
+    phoneNumber: '09111111111'
   });
   await admin.save();
 

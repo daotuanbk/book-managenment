@@ -5,8 +5,8 @@ import { ObjectID } from "mongodb";
 
 const findBookById = async (bookId: string): Promise<IFindBookDetail> => {
   try {
-    return await BooksModel.findOne({_id: bookId})
-    .exec() as any;
+    return await BooksModel.findOne({ _id: bookId })
+      .exec() as any;
   } catch (error) {
     logger.error(`${error.message} ${error.stack}`);
     throw new Error('Internal Server Error');
@@ -16,18 +16,70 @@ const findBookById = async (bookId: string): Promise<IFindBookDetail> => {
 const findBook = async (query: IFindBookQuery): Promise<IFindBookResult> => {
   try {
     const totalPromise = await BooksModel
-    .find(
+      .find(
         query.searchInput ? { title: { $regex: `${query.searchInput}`, $options: 'i' } } : {}
-    )
-    .countDocuments()
-    .exec();
+      )
+      .countDocuments()
+      .exec();
 
     const data = await BooksModel
       .find({
         $or: [
           query.searchInput ? { title: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
-          query.searchInput ? { description: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
-          query.searchInput ? { author: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+        ]
+      })
+      .sort((query.asc as any) === 'true' ? query.sortBy : `-${query.sortBy}`)
+      .skip((query.pageNumber - 1) * query.pageSize)
+      .limit(Number(query.pageSize))
+      .exec();
+    return {
+      data,
+      total: totalPromise
+    };
+  } catch (error) {
+    throw new Error(error.message || 'Internal server error.');
+  }
+};
+
+const findActiveBook = async (query: IFindBookQuery): Promise<IFindBookResult> => {
+  try {
+    const totalPromise = await BooksModel
+      .find({
+        $and: [
+          {
+            $or: [
+              query.searchInput ? { title: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+              query.searchInput ? { description: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+              query.searchInput ? { author: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+            ]
+          },
+          {
+            $or: [
+              { status: 'active' },
+              { status: 'outstock' }
+            ]
+          }
+        ]
+      })
+      .countDocuments()
+      .exec();
+
+    const data = await BooksModel
+      .find({
+        $and: [
+          {
+            $or: [
+              query.searchInput ? { title: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+              query.searchInput ? { description: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+              query.searchInput ? { author: { $regex: `${query.searchInput}`, $options: 'i' } } : {},
+            ]
+          },
+          {
+            $or: [
+              { status: 'active' },
+              { status: 'outstock' }
+            ]
+          }
         ]
       })
       .sort((query.asc as any) === 'true' ? query.sortBy : `-${query.sortBy}`)
@@ -71,20 +123,20 @@ const editBook = async (body: IUpdateBookDetail): Promise<IFindBookDetail> => {
   try {
     if (body.status === 'deactive') {
       return await BooksModel
-      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
-      .exec() as any
+        .findOneAndUpdate({ _id: body._id }, { $set: body }, { new: true })
+        .exec() as any
     } else if (body.quantity === 0) {
       return await BooksModel
-      .findOneAndUpdate({ _id: body._id }, { $set: {...body, status: 'outstock'} }, {new: true})
-      .exec() as any
+        .findOneAndUpdate({ _id: body._id }, { $set: { ...body, status: 'outstock' } }, { new: true })
+        .exec() as any
     } else if (body.status === 'outstock') {
       return await BooksModel
-      .findOneAndUpdate({ _id: body._id }, { $set: {...body, quantity: 0} }, {new: true})
-      .exec() as any
+        .findOneAndUpdate({ _id: body._id }, { $set: { ...body, quantity: 0 } }, { new: true })
+        .exec() as any
     } else {
       return await BooksModel
-      .findOneAndUpdate({ _id: body._id }, { $set: body }, {new: true})
-      .exec() as any;
+        .findOneAndUpdate({ _id: body._id }, { $set: body }, { new: true })
+        .exec() as any;
     }
   } catch (error) {
     throw new Error(error.message || 'Internal server error.');
@@ -107,5 +159,6 @@ export default {
   deleteBook,
   createBook,
   editBook,
-  findExistedBook
+  findExistedBook,
+  findActiveBook
 }

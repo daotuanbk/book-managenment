@@ -1,6 +1,6 @@
 const config = {
   swagger: {
-    title: 'Up Beat (production)',
+    title: 'Project I(Production)',
   },
 };
 

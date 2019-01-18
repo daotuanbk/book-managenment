@@ -1,45 +1,20 @@
 import * as React from 'react';
-import { Row, Col, Table, Input, Button, Tooltip, Tag } from 'antd';
+import { Row, Table, Button, Tooltip, Tag } from 'antd';
 import moment from 'moment';
-class LentList extends React.Component<any, any> {
+class LentHistoryList extends React.Component<any, any> {
   render() {
     const columns = [
-      {
-      title: 'Action',
-      key: 'action',
-      fixed: 'left',
-      width: 150,
-      render: (item, _record) => (
-        <div>
-          <Tooltip
-              key={`${item.title}_lock`}
-              title={item.status === 'deactive' ? 'Activate' : 'Deactivate'}
-            >
-              <Button
-                key={`${item.title}_lock`}
-                icon={item.status === 'deactive' ? 'unlock' : 'lock'}
-                type='primary'
-                style={{ marginRight: '5px' }}
-                onClick={() => {
-                  this.props.lentPageReducer.updateLentEffect({
-                  _id: item._id,
-                  status: item.status === 'deactive' ? 'active' : 'deactive', 
-                })}}
-              />
-            </Tooltip>
-        </div>
-      ),
-    }, {
-      title: 'Title',
+    {
+      title: 'Tên sách',
       dataIndex: 'bookId.title',
       key: 'title',
     }, {
-      title: 'User Borrow',
-      dataIndex: 'userId.fullName',
-      key: 'user',
+      title: 'Giá thuê',
+      dataIndex: 'borrowPrice',
+      key: 'borrowPrice',
     }, 
     {
-      title: 'Date Borrow',
+      title: 'Ngày mượn',
       dataIndex: 'dateBorrow',
       key: 'dateBorrow',
       render: (item: any) => (
@@ -47,35 +22,24 @@ class LentList extends React.Component<any, any> {
       )
     }, 
     {
-      title: 'Date Of Appointment',
+      title: 'Ngày trả',
       dataIndex: 'dateOfAppointment',
       key: 'dateOfAppointment',
       render: (item: any) => (
         moment(item).format('DD/MM/YYYY')
       )
-    },
-    {
-      title: 'Phone Number',
-      dataIndex: 'userId.phoneNumber',
-      key: 'phoneNumber',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'userId.address',
-      key: 'address',
-    },
-    {
-      title: 'Status',
+    }, {
+      title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
       render: (item: any) => {
         if (item === 'active') {
           return (
-            <Tag color='green'>Active</Tag>
+            <Tag color='green'>Đang mượn</Tag>
           )
         } else if (item === 'deactive') {
           return (
-            <Tag color='red'>Deactive</Tag>
+            <Tag color='red'>Đã trả</Tag>
           )
         }
       }
@@ -94,8 +58,8 @@ class LentList extends React.Component<any, any> {
             String(item),
           ),
           onChange: (page, pageSize) => {
-            this.props.lentPageReducer.fetch({
-              search: this.props.lentPageState.searchInput,
+            this.props.lentPageReducer.getLentByUserIdEffect({
+              userId: this.props.profileState._id,
               pageNumber: page,
               pageSize: pageSize,
               sortBy: this.props.lentPageState.sortBy,
@@ -104,8 +68,8 @@ class LentList extends React.Component<any, any> {
             this.props.lentPageReducer.handlePaginationChange({ current: page, pageSize: pageSize });
           },
           onShowSizeChange: (current, size) => {
-            this.props.lentPageReducer.fetchDataEffect({
-              search: this.props.lentPageState.search,
+            this.props.lentPageReducer.getLentByUserIdEffect({
+              userId: this.props.profileState._id,           
               pageNumber: current,
               pageSize: size,
               sortBy: this.props.lentPageState.sortBy,
@@ -119,4 +83,4 @@ class LentList extends React.Component<any, any> {
   }
 }
 
-export default LentList;
+export default LentHistoryList;

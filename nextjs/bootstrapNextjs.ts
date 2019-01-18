@@ -30,7 +30,7 @@ const setupPublicRoutes = (server: express.Express, app: next.Server) => {
   // Nextjs Pages
   server.get('/', Authorize(''), async (req, res) => {
 
-    const booksData = await booksManagenmentService.findBook({
+    const booksData = await booksManagenmentService.findActiveBook({
       searchInput: '',
       pageNumber: 1,
       pageSize: 12,
@@ -43,8 +43,14 @@ const setupPublicRoutes = (server: express.Express, app: next.Server) => {
     });
   });
   
-  server.get('/lent-history/:id', Authorize('Administrator'), async (req, res) => {
-    const lentsData = await lentManagenmentService.findLentById(req.query.id);
+  server.get('/lent-history/:id', Authorize(''), async (req, res) => {
+    const lentsData = await lentManagenmentService.findLentByUserId({
+      userId: req.params.id,
+      pageNumber: 1,
+      pageSize: 10,
+      sortBy: 'dateBorrow',
+      asc: true
+    });
     app.render(req, res, '/lent-history', {
       ...req.query,
       lentsData,
