@@ -8,7 +8,7 @@ import apiRouter from './api';
 import config from './configs';
 
 const bootstrap = async () => {
-  const port = parseInt(process.env.PORT ? process.env.PORT : '', 10) || 80;
+  const port = parseInt(process.env.PORT ? process.env.PORT : '', 10) || 3000;
   const server = express();
 
   // Connect To MongoDB

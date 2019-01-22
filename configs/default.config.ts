@@ -15,10 +15,10 @@ const defaultConfig = {
     mongoConnectionToken: 'mongoConnectionToken',
   },
   nextjs: {
-    apiUrl: 'http://localhost:80/api',
-    hostUrl: 'http://localhost:80/',
+    apiUrl: 'http://localhost:3000/api',
+    hostUrl: 'http://localhost:3000/',
     cookieDomain: 'localhost',
-    corsOrigin: /.*\.localhost:80$/,
+    corsOrigin: /.*\.localhost:3000$/,
   },
 };
 
