@@ -11,7 +11,7 @@ const defaultConfig = {
     facebookOauth: {},
   },
   database: {
-    mongoConnectionString: 'mongodb://localhost:27017/project1',
+    mongoConnectionString: 'mongodb://tuandao@techkids.io:Techkids@123@ds227045.mlab.com:27045/project1',
     mongoConnectionToken: 'mongoConnectionToken',
   },
   nextjs: {
