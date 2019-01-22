@@ -20,24 +20,6 @@ const defaultConfig = {
     cookieDomain: 'localhost',
     corsOrigin: /.*\.localhost:3000$/,
   },
-  customMail: {
-      user: 'test@techkids.io',
-      pass: 'pdbhlyhqghyfslhs'
-  },
-  automaticMail: {
-      user: 'noreply@up-beat.io',
-      pass: 'rpzztqjgdnqacanc',
-      service: 'yandex',
-      host: 'smtp.yandex.com',
-      username: 'Up Beat <noreply@up-beat.io>'
-  },
-  kdcMail: {
-      user: 'test@techkids.io',
-      pass: 'sdflfhfxiqdxcttv',
-      service: 'gmail',
-      host: 'smtp.gmail.com',
-      username: 'Techkids <test@techkids.io>'
-  }
 };
 
 export default defaultConfig;

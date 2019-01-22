@@ -12,13 +12,13 @@ const { Meta } = Card;
 class LandingPage extends React.Component<any, any> {
   static async getInitialProps(props: any) {
     if (!props.req) {
-      const bookPageState = props.store.getState().booksPageModel;
+      // const bookPageState = props.store.getState().booksPageModel;
       await props.store.dispatch.booksPageModel.fetchActiveDataEffect({
-        search: bookPageState.searchInput,
-        pageNumber: bookPageState.pageNumber,
-        pageSize: bookPageState.indexPageSize,
-        sortBy: bookPageState.sortBy,
-        asc: bookPageState.asc,
+        search: '',
+        pageNumber: 1,
+        pageSize: 12,
+        sortBy: 'title',
+        asc: true,
       });
     } else {
       props.store.dispatch.booksPageModel.fetchDataSuccess({ result: props.query.booksData });
@@ -49,7 +49,7 @@ class LandingPage extends React.Component<any, any> {
             <Meta
               title={value.title}
               description={(<div>
-                <span>{value.description.length > 70 ? value.description.splice(0, 70) : value.description}<br/></span>
+                <span>{value.description.length > 70 ? value.description.slice(0, 70) : value.description}<br/></span>
               <span>Còn <b>{value.quantity}</b> sản phẩm<br/></span>
               <span>Đơn giá: <b>{value.borrowPrice}</b> đ</span><br/><br/>
               {
