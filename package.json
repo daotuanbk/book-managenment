@@ -6,7 +6,7 @@
     "build": "next build && tsc --project tsconfig.server.json",
     "postbuild": "shx cp -r static .next/",
     "prebuild": "shx rm -rf .next/ ",
-    "start": "cross-env NODE_ENV=production node .next/production-server/index.js -p $PORT",
+    "start": "cross-env NODE_ENV=production node ./.next/production-server/index.js -p $PORT",
     "initdb": "ts-node --project tsconfig.server.json initdb.ts"
   },
   "dependencies": {
