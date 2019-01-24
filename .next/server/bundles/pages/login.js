@@ -94,8 +94,8 @@ module.exports = require("react");
 
 "use strict";
 
-// EXTERNAL MODULE: ./configs/index.ts + 3 modules
-var configs = __webpack_require__(9);
+// EXTERNAL MODULE: ./configs/index.ts + 4 modules
+var configs = __webpack_require__(8);
 
 // EXTERNAL MODULE: external "@babel/runtime/regenerator"
 var regenerator_ = __webpack_require__(0);
@@ -2688,9 +2688,17 @@ module.exports = require("isomorphic-fetch");
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
+
+/***/ }),
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+
+// CONCATENATED MODULE: ./configs/production/default.config.ts
 var defaultConfig = {
   app: {
     defaultPageSize: 10,
@@ -2708,29 +2716,13 @@ var defaultConfig = {
     mongoConnectionToken: 'mongoConnectionToken'
   },
   nextjs: {
-    apiUrl: 'http://localhost:3000/api',
-    hostUrl: 'http://localhost:3000/',
-    cookieDomain: 'localhost',
-    corsOrigin: /.*\.localhost:3000$/
+    apiUrl: 'http://project1-hust.herokuapp.com/api',
+    hostUrl: 'http://project1-hust.herokuapp.com/',
+    cookieDomain: 'project1-hust.herokuapp.com',
+    corsOrigin: /.*\.project1-hust.herokuapp.com$/
   }
 };
-/* harmony default export */ __webpack_exports__["a"] = (defaultConfig);
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-module.exports = require("next/router");
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXTERNAL MODULE: ./configs/default.config.ts
-var default_config = __webpack_require__(7);
-
+/* harmony default export */ var default_config = (defaultConfig);
 // CONCATENATED MODULE: ./configs/modules/users.config.ts
 var usersModuleConfig = {
   usersModuleConfig: {
@@ -2765,54 +2757,84 @@ var external__lodash__default = /*#__PURE__*/__webpack_require__.n(external__lod
 
 var environmentConfig =  true ? production_config : developmentConfig;
 
-var configs_config = external__lodash_["merge"]({}, default_config["a" /* default */], users_config, environmentConfig);
+var configs_config = external__lodash_["merge"]({}, default_config, users_config, environmentConfig);
 
 /* harmony default export */ var configs = __webpack_exports__["a"] = (configs_config);
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = require("antd/lib/icon/style/css");
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("antd/lib/icon");
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("antd/lib/button/style/css");
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = require("antd/lib/button");
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = require("moment");
 
 /***/ }),
+/* 14 */,
 /* 15 */,
 /* 16 */,
-/* 17 */,
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = require("antd/lib/row/style/css");
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("antd/lib/row");
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var defaultConfig = {
+  app: {
+    defaultPageSize: 10,
+    maxPageSize: 50,
+    pageSizeOptions: [10, 20, 50]
+  },
+  auth: {
+    expiresIn: 60 * 60,
+    secret: 'Ba2THViaoHd8Nn7tNNoRfWxrbi4u1oDefkQtdk01FzqY11Pr8dlM7fkkQnZJWKP',
+    googleOauth: {},
+    facebookOauth: {}
+  },
+  database: {
+    mongoConnectionString: 'mongodb://admin:bigbang123@ds227045.mlab.com:27045/project1',
+    mongoConnectionToken: 'mongoConnectionToken'
+  },
+  nextjs: {
+    apiUrl: 'http://localhost:3000/api',
+    hostUrl: 'http://localhost:3000/',
+    cookieDomain: 'localhost',
+    corsOrigin: /.*\.localhost:3000$/
+  }
+};
+/* harmony default export */ __webpack_exports__["a"] = (defaultConfig);
 
 /***/ }),
 /* 20 */
@@ -3878,7 +3900,7 @@ var usersPageModel = Object(core_["createModel"])({
 });
 /* harmony default export */ var users_page_model = (usersPageModel);
 // EXTERNAL MODULE: external "next/router"
-var router_ = __webpack_require__(8);
+var router_ = __webpack_require__(7);
 var router__default = /*#__PURE__*/__webpack_require__.n(router_);
 
 // EXTERNAL MODULE: external "qs"
@@ -3983,10 +4005,10 @@ var loginPageModel = Object(core_["createModel"])({
 });
 /* harmony default export */ var login_page_model = (loginPageModel);
 // EXTERNAL MODULE: ./configs/default.config.ts
-var default_config = __webpack_require__(7);
+var default_config = __webpack_require__(19);
 
 // EXTERNAL MODULE: external "moment"
-var external__moment_ = __webpack_require__(14);
+var external__moment_ = __webpack_require__(13);
 var external__moment__default = /*#__PURE__*/__webpack_require__.n(external__moment_);
 
 // CONCATENATED MODULE: ./rematch/models/ui/books-page/model.ts
@@ -4910,13 +4932,13 @@ module.exports = __webpack_require__(109);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_antd_lib_row_style_css__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_antd_lib_row_style_css__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_antd_lib_row_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_antd_lib_row_style_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_antd_lib_row__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_antd_lib_row__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_antd_lib_row___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_antd_lib_row__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_antd_lib_button_style_css__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_antd_lib_button_style_css__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_antd_lib_button_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_antd_lib_button_style_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_antd_lib_button__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_antd_lib_button__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_antd_lib_button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_antd_lib_button__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_antd_lib_checkbox_style_css__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_antd_lib_checkbox_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_antd_lib_checkbox_style_css__);
@@ -4926,9 +4948,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_antd_lib_input_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_antd_lib_input_style_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_antd_lib_input__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_antd_lib_input___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_antd_lib_input__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_antd_lib_icon_style_css__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_antd_lib_icon_style_css__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_antd_lib_icon_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_antd_lib_icon_style_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_antd_lib_icon__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_antd_lib_icon__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_antd_lib_icon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_antd_lib_icon__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_antd_lib_form_style_css__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_antd_lib_form_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_antd_lib_form_style_css__);

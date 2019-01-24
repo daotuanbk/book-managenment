@@ -1,4 +1,4 @@
-import defaultConfig from './default.config';
+import defaultConfig from './production/default.config';
 import usersModuleConfig from './modules/users.config';
 import developmentConfig from './development.config';
 import productionConfig from './production.config';
