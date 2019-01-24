@@ -1,1 +1,0 @@
-{"version":3,"file":"add-modification-audit-info.js","sourceRoot":"","sources":["../../../../../api/core/helpers/add-modification-audit-info.ts"],"names":[],"mappings":";;AAEA,MAAM,wBAAwB,GAAG,CAC/B,GAAQ,EACR,KAAU,EACP,EAAE;IACL,OAAO;QACL,GAAG,KAAK;QACR,cAAc,EAAE,GAAG,CAAC,KAAK;QACzB,cAAc,EAAE,IAAI,IAAI,EAAE;KAC3B,CAAC;AACJ,CAAC,CAAC;AAEF,kBAAe,wBAAwB,CAAC"}

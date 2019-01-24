@@ -1,1 +1,0 @@
-{"version":3,"file":"add-active-schema.js","sourceRoot":"","sources":["../../../../../api/core/helpers/add-active-schema.ts"],"names":[],"mappings":";;AAEA,MAAM,eAAe,GAAG,CAAC,UAA4B,EAAoB,EAAE;IACzE,OAAO;QACL,GAAG,UAAU;QACb,QAAQ,EAAE,OAAO;KAClB,CAAC;AACJ,CAAC,CAAC;AAEF,kBAAe,eAAe,CAAC"}
