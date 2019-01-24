@@ -67,25 +67,46 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 73);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./pages/_document.tsx":
+/***/ 0:
+/***/ (function(module, exports) {
+
+module.exports = require("@babel/runtime/regenerator");
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+
+/***/ 73:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(74);
+
+
+/***/ }),
+
+/***/ 74:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MyDocument; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__ = __webpack_require__("@babel/runtime/regenerator");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_document__ = __webpack_require__("next/document");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_document__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_next_document___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_next_document__);
 
-var _jsxFileName = "/Users/Kael/Desktop/project-1/pages/_document.tsx";
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -124,58 +145,17 @@ function (_Document) {
   _createClass(MyDocument, [{
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("html", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 10
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_next_document__["Head"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 11
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("meta", {
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("html", null, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_next_document__["Head"], null, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("meta", {
         name: "viewport",
-        content: "width=device-width, initial-scale=1",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 12
-        }
+        content: "width=device-width, initial-scale=1"
       }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("meta", {
-        charSet: "utf-8",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 13
-        }
+        charSet: "utf-8"
       }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("link", {
         rel: "stylesheet",
-        href: "/_next/static/style.css",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 14
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("title", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 15
-        }
-      }, "Project I")), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("body", {
-        className: "custom_class",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 17
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_next_document__["Main"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 18
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_next_document__["NextScript"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 19
-        }
-      })));
+        href: "/_next/static/style.css"
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("title", null, "Project I")), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("body", {
+        className: "custom_class"
+      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_next_document__["Main"], null), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_next_document__["NextScript"], null)));
     }
   }], [{
     key: "getInitialProps",
@@ -216,34 +196,11 @@ function (_Document) {
 
 /***/ }),
 
-/***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./pages/_document.tsx");
-
-
-/***/ }),
-
-/***/ "@babel/runtime/regenerator":
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/regenerator");
-
-/***/ }),
-
-/***/ "next/document":
+/***/ 75:
 /***/ (function(module, exports) {
 
 module.exports = require("next/document");
 
-/***/ }),
-
-/***/ "react":
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
 /***/ })
 
 /******/ });
-//# sourceMappingURL=_document.js.map
